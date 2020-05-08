@@ -5,9 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [HideInInspector] public Vector2 mMoveVector;
-    [HideInInspector] public float mChangeDelta;
-    [HideInInspector] public float mChainLengthDelta;
+    Vector2 mMoveVector;
+    float mChangeDelta;
+
+    Raft mCurrentRaft;
 
     public void OnMoveStick(InputAction.CallbackContext pCallbackContext)
     {
@@ -19,9 +20,5 @@ public class PlayerController : MonoBehaviour
         mChangeDelta = (float)pCallbackContext.ReadValueAsObject();
     }
 
-    public void OnChainLengthChange(InputAction.CallbackContext pCallbackContext)
-    {
-        mChainLengthDelta = (float)pCallbackContext.ReadValueAsObject();
-    }
 
 }
