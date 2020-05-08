@@ -65,6 +65,9 @@ TextureImporter:
   - first:
       213: -5540648042656198855
     second: ChainLink
+  - first:
+      213: 3929453942698372637
+    second: SpriteSheet_11
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -216,10 +219,10 @@ TextureImporter:
       name: Tube
       rect:
         serializedVersion: 2
-        x: 160
-        y: 210
-        width: 35
-        height: 44
+        x: 69
+        y: 78
+        width: 57
+        height: 73
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -368,7 +371,7 @@ TextureImporter:
         width: 5
         height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
