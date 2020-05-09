@@ -67,10 +67,19 @@ TextureImporter:
     second: ChainLink
   - first:
       213: 3929453942698372637
-    second: SpriteSheet_11
+    second: Crocodile
   - first:
       213: -4573745880038047565
     second: SpriteSheet_10
+  - first:
+      213: 8058879627694289943
+    second: Goat
+  - first:
+      213: 6833624519701456044
+    second: Bar_background
+  - first:
+      213: 4050273695720440628
+    second: Bar_Tiles
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -382,6 +391,90 @@ TextureImporter:
       bones: []
       spriteID: 93f8308f5f9ab13b0800000000000000
       internalID: -5540648042656198855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crocodile
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 103
+        width: 136
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1e6bcfaa89388630800000000000000
+      internalID: 3929453942698372637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goat
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 16
+        width: 33
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 714b958d254e6df60800000000000000
+      internalID: 8058879627694289943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bar_background
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 18
+        width: 6
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca464396b49e5de50800000000000000
+      internalID: 6833624519701456044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bar_Tiles
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 18
+        width: 6
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 433868c8776753830800000000000000
+      internalID: 4050273695720440628
       vertices: []
       indices: 
       edges: []
