@@ -36,25 +36,30 @@ public class Obstacle : MonoBehaviour
         {
             return;
         }
+        ObstacleBehaviour(aRaft);
+    }
+
+    protected void ObstacleBehaviour(Raft pRaft)
+    {
         mCollidedTime = mRedamageAfterTime;
-        switch(mObstacleType)
+        switch (mObstacleType)
         {
             case ObstacleType.None:
                 break;
             case ObstacleType.Damage:
                 {
-                    aRaft.mHealth -= mDamageAmount;
-                    if(aRaft.mHealth <= 0.0f)
+                    pRaft.mHealth -= mDamageAmount;
+                    if (pRaft.mHealth <= 0.0f)
                     {
-                        aRaft.mHealth = 0.0f;
+                        pRaft.mHealth = 0.0f;
                         //do gameover
                     }
                     break;
                 }
             case ObstacleType.Push:
                 {
-                    Vector3 aDirection = (aRaft.transform.position - transform.position).normalized;
-                    aRaft.mRigidbody.AddRelativeForce(aDirection * mPushMagnitude, ForceMode2D.Impulse);
+                    Vector3 aDirection = (pRaft.transform.position - transform.position).normalized;
+                    pRaft.mRigidbody.AddRelativeForce(aDirection * mPushMagnitude, ForceMode2D.Impulse);
                     break;
                 }
         }

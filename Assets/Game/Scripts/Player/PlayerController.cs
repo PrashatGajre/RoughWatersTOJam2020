@@ -31,12 +31,12 @@ public class PlayerController : MonoBehaviour
             Raft aRaft = null;
             if (mChangeDelta <= -mChangeRaftThreshold && mCurrentRaft.mRaftIndex != 0)
             {
-                aRaft = DataHandler.Instance.mActiveRafts[mCurrentRaft.mRaftIndex - 1];
+                aRaft = DataHandler.Instance.mActiveRafts[(int)mCurrentRaft.mRaftIndex - 1];
                 if (aRaft.mSelected)
                 {
                     while (aRaft.mRaftIndex != 0)
                     {
-                        aRaft = DataHandler.Instance.mActiveRafts[aRaft.mRaftIndex - 1];
+                        aRaft = DataHandler.Instance.mActiveRafts[(int)aRaft.mRaftIndex - 1];
                         if (!aRaft.mSelected)
                         {
                             break;
@@ -50,14 +50,14 @@ public class PlayerController : MonoBehaviour
                 
             }
             else if (mChangeDelta >= mChangeRaftThreshold &&
-                mCurrentRaft.mRaftIndex != (DataHandler.Instance.mActiveRafts.Length - 1))
+                (int)mCurrentRaft.mRaftIndex != (DataHandler.Instance.mActiveRafts.Length - 1))
             {
-                aRaft = DataHandler.Instance.mActiveRafts[mCurrentRaft.mRaftIndex + 1];
+                aRaft = DataHandler.Instance.mActiveRafts[(int)mCurrentRaft.mRaftIndex + 1];
                 if (aRaft.mSelected)
                 {
-                    while (aRaft.mRaftIndex != (DataHandler.Instance.mActiveRafts.Length - 1))
+                    while ((int)aRaft.mRaftIndex != (DataHandler.Instance.mActiveRafts.Length - 1))
                     {
-                        aRaft = DataHandler.Instance.mActiveRafts[aRaft.mRaftIndex + 1];
+                        aRaft = DataHandler.Instance.mActiveRafts[(int)aRaft.mRaftIndex + 1];
                         if (!aRaft.mSelected)
                         {
                             break;
@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
         mChangeDelta = (float)pCallbackContext.ReadValueAsObject();
         if ((mChangeDelta <= -mChangeRaftThreshold && mCurrentRaft.mRaftIndex != 0)
             ||(mChangeDelta >= mChangeRaftThreshold &&
-            mCurrentRaft.mRaftIndex != (DataHandler.Instance.mActiveRafts.Length - 1)))
+            (int)mCurrentRaft.mRaftIndex != (DataHandler.Instance.mActiveRafts.Length - 1)))
         {
             if (mCurrentShiftDelay == -1)
             {
