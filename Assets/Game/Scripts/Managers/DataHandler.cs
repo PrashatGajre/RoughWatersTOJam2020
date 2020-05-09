@@ -5,5 +5,11 @@ using UnityEngine;
 public class DataHandler : Singleton<DataHandler>
 {
     public Raft[] mActiveRafts;
-
+    void Start()
+    {
+        for(int aI = 0; aI < mActiveRafts.Length;aI ++)
+        {
+            mActiveRafts[aI].mRaftIndex = aI;
+        }
+    }
 }

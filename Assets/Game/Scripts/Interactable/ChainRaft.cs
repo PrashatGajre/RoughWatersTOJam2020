@@ -17,8 +17,12 @@ public class ChainRaft : Raft
     [SerializeField] Chain mRightChainJoint;
     [SerializeField] Chain mRightEndChain;
     [SerializeField] Transform mChainParent;
-    float mChainLengthDelta;
+    [SerializeField] float mChainIncreaseDelay = 0.3f;
     int mCurrentChainLength = 0;
+    bool mAddChainJoint;
+    bool mRemoveChainJoint;
+    float mChainTimer = 0.0f;
+
     void Start()
     {
         ConnectionSetup(mRightChainJoint, mRightRaft, -1);
@@ -30,8 +34,27 @@ public class ChainRaft : Raft
         }
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        mChainTimer += Time.deltaTime;
+        if(mChainTimer >= mChainIncreaseDelay)
+        {
+            mChainTimer = 0.0f;
+            if(mAddChainJoint)
+            {
+                AddNewChainConnection();
+            }
+            if(mRemoveChainJoint)
+            {
+                RemoveChainConnection();
+            }
+        }
+    }
+
     void AddNewChainConnection()
     {
+        mAddChainJoint = false;
         if(mCurrentChainLength == mMaximumChainLength)
         {
             return;
@@ -43,6 +66,7 @@ public class ChainRaft : Raft
     }
     void RemoveChainConnection()
     {
+        mRemoveChainJoint = false;
         if(mCurrentChainLength == mMinimumChainLength)
         {
             return;
@@ -103,14 +127,14 @@ public class ChainRaft : Raft
 
     public void OnChainLengthChange(InputAction.CallbackContext pCallbackContext)
     {
-        mChainLengthDelta = (float)pCallbackContext.ReadValueAsObject();
-        if(mChainLengthDelta <= -mTriggerThreshold)
+        float aChainLengthDelta = (float)pCallbackContext.ReadValueAsObject();
+        if(aChainLengthDelta <= -mTriggerThreshold)
         {
-            RemoveChainConnection();
+            mRemoveChainJoint = true;
         }
-        else if(mChainLengthDelta >= mTriggerThreshold)
+        else if(aChainLengthDelta >= mTriggerThreshold)
         {
-            AddNewChainConnection();
+            mAddChainJoint = true;
         }
     }
 

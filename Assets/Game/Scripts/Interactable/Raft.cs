@@ -5,9 +5,18 @@ using Photon.Pun;
 public class Raft : MonoBehaviourPun,IPunObservable
 {
     [HideInInspector] public bool mSelected;
+    [HideInInspector] public int mRaftIndex;
+    public float mSpeed = 50.0f;
     public Rigidbody2D mRigidbody;
     public float mHealth = 100;
     public float mFatigue = 100;
+    public GameObject mSelectedSprite;
+
+    protected virtual void Update()
+    {
+        mSelectedSprite.SetActive(mSelected);
+    }
+
     public void OnPhotonSerializeView(PhotonStream pStream, PhotonMessageInfo pInfo)
     {
         pStream.Serialize(ref mSelected);
