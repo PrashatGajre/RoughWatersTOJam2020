@@ -219,8 +219,8 @@ TextureImporter:
       name: Tube
       rect:
         serializedVersion: 2
-        x: 69
-        y: 78
+        x: 1
+        y: 92
         width: 57
         height: 73
       alignment: 0
