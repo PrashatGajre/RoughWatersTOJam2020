@@ -8,7 +8,7 @@ public class Menu : MonoBehaviour
 	public MenuClassifier mMenuClassifier;
 	public enum StartMenuState
 	{
-		Ingnore,
+		Ignore,
 		Active,
 		Disabled
 	}
