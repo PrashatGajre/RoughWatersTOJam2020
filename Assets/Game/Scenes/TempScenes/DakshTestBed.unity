@@ -672,31 +672,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1560862447389711893, guid: 91ac4cdc53b6a66489a4e9b83dbbf03b,
-        type: 3}
-      propertyPath: mFeelers.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1560862447389711893, guid: 91ac4cdc53b6a66489a4e9b83dbbf03b,
-        type: 3}
-      propertyPath: mFeelers.Array.data[1].mDistance
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1560862447389711893, guid: 91ac4cdc53b6a66489a4e9b83dbbf03b,
-        type: 3}
-      propertyPath: mFeelers.Array.data[2].mDistance
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1560862447389711893, guid: 91ac4cdc53b6a66489a4e9b83dbbf03b,
-        type: 3}
-      propertyPath: mFeelers.Array.data[1].mOffset.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1560862447389711893, guid: 91ac4cdc53b6a66489a4e9b83dbbf03b,
-        type: 3}
-      propertyPath: mFeelers.Array.data[2].mOffset.x
-      value: -0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 5123077338013808559, guid: 91ac4cdc53b6a66489a4e9b83dbbf03b,
         type: 3}
       propertyPath: m_Name

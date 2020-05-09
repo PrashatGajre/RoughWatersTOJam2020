@@ -59,7 +59,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 2}
+  m_Size: {x: 1.45, y: 4.15}
   m_EdgeRadius: 0
 --- !u!114 &3972023334411323984
 MonoBehaviour:
@@ -177,8 +177,10 @@ MonoBehaviour:
   mPriority: 1
   mSteeringAgent: {fileID: 0}
   mFeelers:
-  - mDistance: 4
-    mOffset: {x: 0, y: 0, z: 0}
+  - mDistance: 2
+    mOffset: {x: 0.4, y: 1.2, z: 0}
+  - mDistance: 2
+    mOffset: {x: -0.4, y: 1.2, z: 0}
   mObstacleLayers:
     serializedVersion: 2
     m_Bits: 512
@@ -448,7 +450,7 @@ SpriteRenderer:
   m_SortingLayerID: 1238481229
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8755591262435691780, guid: 382b689b96ce422489a56970f6480cf3,
+  m_Sprite: {fileID: 3929453942698372637, guid: 382b689b96ce422489a56970f6480cf3,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
