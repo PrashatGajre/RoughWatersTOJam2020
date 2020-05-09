@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 5030835981603112550, guid: 91faaa38678e40b4bbe3c80896659cc0,
         type: 3}
       propertyPath: m_Name
-      value: Pipe Variant
+      value: Pipe(Red)
       objectReference: {fileID: 0}
     - target: {fileID: 5030835981603112552, guid: 91faaa38678e40b4bbe3c80896659cc0,
         type: 3}
@@ -76,6 +76,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.20392159
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608819761855293627, guid: 91faaa38678e40b4bbe3c80896659cc0,
+        type: 3}
+      propertyPath: mDamageImmuneRaft
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91faaa38678e40b4bbe3c80896659cc0, type: 3}

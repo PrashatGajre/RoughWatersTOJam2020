@@ -15,7 +15,7 @@ public class Obstacle : MonoBehaviour
     [SerializeField] float mPushMagnitude = 10.0f;
     [SerializeField] float mDamageAmount = 10.0f;
     [SerializeField] float mRedamageAfterTime = 0.5f;
-    float mCollidedTime = 0.0f;
+    protected float mCollidedTime = 0.0f;
 
     protected virtual void Update()
     {
