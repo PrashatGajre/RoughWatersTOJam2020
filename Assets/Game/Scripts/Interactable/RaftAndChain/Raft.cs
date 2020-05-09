@@ -4,8 +4,15 @@ using UnityEngine;
 using Photon.Pun;
 public class Raft : MonoBehaviour/*Pun,IPunObservable*/
 {
+    public enum RaftType
+    {
+        Purple,
+        Red,
+        Yellow
+    }
+
     [HideInInspector] public bool mSelected;
-    [HideInInspector] public int mRaftIndex;
+    [HideInInspector] public RaftType mRaftIndex;
     public float mSpeed = 50.0f;
     public float mFatigueDecreaseRate = 10.0f;
     public float mFatigueIncreaseRate = 10.0f;

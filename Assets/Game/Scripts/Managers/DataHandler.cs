@@ -9,7 +9,7 @@ public class DataHandler : Singleton<DataHandler>
     {
         for(int aI = 0; aI < mActiveRafts.Length;aI ++)
         {
-            mActiveRafts[aI].mRaftIndex = aI;
+            mActiveRafts[aI].mRaftIndex = (Raft.RaftType)aI;
         }
     }
 }
