@@ -68,6 +68,9 @@ TextureImporter:
   - first:
       213: 3929453942698372637
     second: SpriteSheet_11
+  - first:
+      213: -4573745880038047565
+    second: SpriteSheet_10
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -198,10 +201,10 @@ TextureImporter:
       name: Tape
       rect:
         serializedVersion: 2
-        x: 116
+        x: 115
         y: 219
-        width: 40
-        height: 25
+        width: 42
+        height: 26
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -282,10 +285,10 @@ TextureImporter:
       name: Rock_1
       rect:
         serializedVersion: 2
-        x: 4
-        y: 169
-        width: 41
-        height: 36
+        x: 3
+        y: 168
+        width: 44
+        height: 39
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -303,10 +306,10 @@ TextureImporter:
       name: Rock_2
       rect:
         serializedVersion: 2
-        x: 50
-        y: 166
-        width: 40
-        height: 39
+        x: 49
+        y: 165
+        width: 42
+        height: 41
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -324,10 +327,10 @@ TextureImporter:
       name: Rock_3
       rect:
         serializedVersion: 2
-        x: 97
-        y: 169
-        width: 39
-        height: 28
+        x: 96
+        y: 168
+        width: 41
+        height: 36
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -345,10 +348,10 @@ TextureImporter:
       name: Rock_4
       rect:
         serializedVersion: 2
-        x: 143
-        y: 174
-        width: 44
-        height: 25
+        x: 142
+        y: 171
+        width: 43
+        height: 30
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
