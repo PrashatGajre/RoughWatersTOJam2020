@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2417982128243780970}
   - component: {fileID: 7678975608438088095}
   - component: {fileID: 6923098335043850424}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LogAct
   m_TagString: Untagged
   m_Icon: {fileID: 0}
