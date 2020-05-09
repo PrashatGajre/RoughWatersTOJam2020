@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8851706025090762939}
   - component: {fileID: 8333762273946140657}
   - component: {fileID: 5971976272927535291}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ConnecterChain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1158399085
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: -5540648042656198855, guid: 382b689b96ce422489a56970f6480cf3,
     type: 3}
@@ -172,3 +172,5 @@ MonoBehaviour:
   mRigidbody: {fileID: 8851706025090762939}
   mHingeJoint: {fileID: 8333762273946140657}
   mChainCollider: {fileID: 1460517833403323563}
+  mConnectedTo: {fileID: 0}
+  mConnectedFrom: {fileID: 0}

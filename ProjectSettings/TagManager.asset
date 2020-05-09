@@ -13,10 +13,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Shore
+  - Obstacle
+  - Pickable
+  - Raft
   - 
   - 
   - 
@@ -40,4 +40,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Water
+    uniqueID: 3281112297
+    locked: 0
+  - name: Shore
+    uniqueID: 1355211733
+    locked: 0
+  - name: Obstacle
+    uniqueID: 1238481229
+    locked: 0
+  - name: Pickable
+    uniqueID: 2665478041
+    locked: 0
+  - name: Raft
+    uniqueID: 3136568211
     locked: 0

@@ -23,8 +23,9 @@ public class ChainRaft : Raft
     bool mRemoveChainJoint;
     float mChainTimer = 0.0f;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         ConnectionSetup(mRightChainJoint, mRightRaft, -1);
         ConnectionSetup(mLeftChainJoint, mLeftRaft, 1);
         mCurrentChainLength++;
