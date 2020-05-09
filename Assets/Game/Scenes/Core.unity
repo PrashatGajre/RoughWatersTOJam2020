@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mNetworkCallbacks: {fileID: 160530157}
+  mStartMenu: {fileID: 11400000, guid: 2f143ba69c9640948afcebc5eaea560e, type: 2}
   mRoomMenu: {fileID: 11400000, guid: be90231f80264d34e9922678d439088c, type: 2}
 --- !u!114 &160530157
 MonoBehaviour:
