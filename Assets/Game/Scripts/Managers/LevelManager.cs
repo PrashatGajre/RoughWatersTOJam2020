@@ -115,7 +115,10 @@ public class LevelManager : MonoBehaviour
 
     public void SpawnPlayer()
     {
+        Debug.Log("Creating Player");
         GameObject player = Photon.Pun.PhotonNetwork.Instantiate(mPlayerDataPrefabName, Vector3.zero, Quaternion.identity);
+        Debug.Log("Creating Created");
         player.name = Photon.Pun.PhotonNetwork.NickName;
+        Debug.Log("Creating Nickname Changed");
     }
 }
