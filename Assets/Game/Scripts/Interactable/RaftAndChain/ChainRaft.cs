@@ -53,6 +53,24 @@ public class ChainRaft : Raft
         }
     }
 
+    void LateUpdate()
+    {
+        ChainDisconnectCorrection(mLeftEndChain, mLeftRaft);
+        ChainDisconnectCorrection(mRightEndChain, mRightRaft);
+    }
+
+    void ChainDisconnectCorrection(Chain pMainChainJoint, Raft pMovingRaft)
+    {
+        Vector3 aDistanceVector = pMainChainJoint.mConnectedFrom.transform.position - pMainChainJoint.transform.position;
+        float aDist = aDistanceVector.magnitude;
+        if (aDist > pMainChainJoint.mChainCollider.size.y)
+        {
+            Vector3 aMoveOffset = aDistanceVector.normalized * (aDist - pMainChainJoint.mChainCollider.size.y);
+            pMainChainJoint.transform.position += aMoveOffset;
+            pMovingRaft.transform.position += aMoveOffset;
+        }
+    }
+
     void AddNewChainConnection()
     {
         mAddChainJoint = false;
