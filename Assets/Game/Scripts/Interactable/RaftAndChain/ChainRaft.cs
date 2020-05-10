@@ -58,8 +58,11 @@ public class ChainRaft : Raft
 
     void LateUpdate()
     {
-        ChainDisconnectCorrection(mLeftEndChain, mLeftRaft);
-        ChainDisconnectCorrection(mRightEndChain, mRightRaft);
+        if (mLeftEndChain.mConnectedFrom != null)
+        {
+            ChainDisconnectCorrection(mLeftEndChain, mLeftRaft);
+            ChainDisconnectCorrection(mRightEndChain, mRightRaft);
+        }
     }
 
     void ChainDisconnectCorrection(Chain pMainChainJoint, Raft pMovingRaft)
