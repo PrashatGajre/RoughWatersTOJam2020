@@ -66,11 +66,11 @@ public class EffectsManager : Singleton<EffectsManager>
         GenHelpers.DeSerializeData((byte[])aData[0],ref aEvent);
         switch(aEvent.mEventType)
         {
-            case 0:
-                {
-                    DamageEffect();
-                    break;
-                }
+            //case 0:
+            //    {
+            //        DamageEffect();
+            //        break;
+            //    }
             case 1:
                 {
                     ItemCollectedEffect((Item.Type)aEvent.mItemType);
@@ -140,25 +140,25 @@ public class EffectsManager : Singleton<EffectsManager>
 
     public void DamageEffect()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            EffectEvents aEventData = new EffectEvents()
-            {
-                mEventType = 0,
-                mItemType = 0
-            };
-            NetworkManager.Instance.RaiseEvent(
-                NetworkManager.EVNT_EFFECTS,
-                new object[] { GenHelpers.SerializeData(aEventData)
-                }, new Photon.Realtime.RaiseEventOptions()
-                {
-                    Receivers = Photon.Realtime.ReceiverGroup.Others
-                },
-                new SendOptions()
-                {
-                    Reliability = true
-                });
-        }
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    EffectEvents aEventData = new EffectEvents()
+        //    {
+        //        mEventType = 0,
+        //        mItemType = 0
+        //    };
+        //    NetworkManager.Instance.RaiseEvent(
+        //        NetworkManager.EVNT_EFFECTS,
+        //        new object[] { GenHelpers.SerializeData(aEventData)
+        //        }, new Photon.Realtime.RaiseEventOptions()
+        //        {
+        //            Receivers = Photon.Realtime.ReceiverGroup.Others
+        //        },
+        //        new SendOptions()
+        //        {
+        //            Reliability = true
+        //        });
+        //}
         mDamageEffect.mCurrentCounter = 0;
         VignetteEffectCaller(mDamageEffect);
         if(mCameraShakeNoise == null)
