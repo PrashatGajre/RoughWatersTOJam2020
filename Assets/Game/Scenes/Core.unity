@@ -294,21 +294,21 @@ MonoBehaviour:
     mEffectUpDelay: 0.1
     mEffectDownTime: 0.1
     mEffectDownDelay: 0.1
-    mEffectColor: {r: 0.050980397, g: 0.58431375, b: 0.8941177, a: 1}
+    mEffectColor: {r: 0.050980397, g: 0.58431375, b: 0.8941177, a: 0.69803923}
     mCurrentCounter: 0
   - mEffectRepeatCount: 1
     mEffectUpTime: 0.1
     mEffectUpDelay: 0.1
     mEffectDownTime: 0.1
     mEffectDownDelay: 0.1
-    mEffectColor: {r: 0.62352943, g: 0.627451, b: 0.5882353, a: 1}
+    mEffectColor: {r: 0.9647059, g: 0.81960785, b: 0, a: 0.69803923}
     mCurrentCounter: 0
   - mEffectRepeatCount: 3
     mEffectUpTime: 0.1
     mEffectUpDelay: 0.1
     mEffectDownTime: 0.1
     mEffectDownDelay: 0.1
-    mEffectColor: {r: 0.96470594, g: 0.8196079, b: 0, a: 1}
+    mEffectColor: {r: 0.050980393, g: 0.58431375, b: 0.89411765, a: 0.69803923}
     mCurrentCounter: 0
   mDamageEffect:
     mEffectRepeatCount: 3
