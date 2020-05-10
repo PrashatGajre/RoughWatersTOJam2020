@@ -13,6 +13,7 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] MenuClassifier mHUDClassifier;
 
     Vector2 gravity;
+    int totalScenesLoaded = 0;
 
     private void OnEnable()
     {
@@ -97,7 +98,6 @@ public class LevelManager : Singleton<LevelManager>
 
         yield return new WaitForSeconds(0.3f);
      
-        if(NetworkManager.Instance.IsMasterClient())
         OnSceneReadyEvent(new object[]{1});
     }
 
@@ -115,10 +115,15 @@ public class LevelManager : Singleton<LevelManager>
 
         if (eventCode == NetworkManager.EVNT_GAMESCENEREADY)
         {
-            MenuManager.Instance.HideMenu(mSceneLoadingMenuClassifier);
-            Physics2D.gravity = gravity;
-            DataHandler.Instance.mGameStarted = true;
-            MenuManager.Instance.ShowMenu(mHUDClassifier);
+            object[] data = (object[])aPhotonEvent.CustomData;
+            totalScenesLoaded += (int)data[0];
+            if (totalScenesLoaded == Photon.Pun.PhotonNetwork.CurrentRoom.PlayerCount)
+            {
+                MenuManager.Instance.HideMenu(mSceneLoadingMenuClassifier);
+                Physics2D.gravity = gravity;
+                DataHandler.Instance.mGameStarted = true;
+                MenuManager.Instance.ShowMenu(mHUDClassifier);
+            }
         }
         if (eventCode == NetworkManager.EVNT_GAMELOST)
         {

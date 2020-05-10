@@ -11,6 +11,7 @@ public class RoomMenu : Menu
 
     [SerializeField] Button mStartSinglePlayerButton;
 
+    int totalScenesLoaded = 0;
     protected override void OnVisible()
     {
         mStartSinglePlayerButton.Select();
@@ -87,7 +88,6 @@ public class RoomMenu : Menu
             new ExitGames.Client.Photon.SendOptions { Reliability = true });
     }
 
-    int totalScenesLoaded = 0;
     public void OnNetworkGameScenesLoaded(ExitGames.Client.Photon.EventData photonEvent)
     {
 
@@ -113,6 +113,7 @@ public class RoomMenu : Menu
             {
                 allPlayerScenesLoaded = true;
             }
+            totalScenesLoaded = 0;
         }
 
 
