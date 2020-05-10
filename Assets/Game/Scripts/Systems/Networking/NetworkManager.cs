@@ -16,17 +16,20 @@ public class NetworkManager : Singleton<NetworkManager>
     public static byte EVNT_GAMESCENEREADY = 3;
     public static byte EVNT_GAMEWON = 4;
     public static byte EVNT_GAMELOST = 5;
-    public static byte EVNT_GAMEOVER = 6;
+    //public static byte EVNT_GAMEOVER = 6;
     public static byte EVNT_EFFECTS = 7;
     string mPlayerNickName;
 
     Player mCurrentPlayer = null;
 
     [SerializeField] public NetworkCallbacks mNetworkCallbacks;
+    public MenuClassifier mSceneLoadingMenu;
 
     [SerializeField] public MenuClassifier mStartMenu;
     [SerializeField] MenuClassifier mRoomMenu;
     [SerializeField] MenuClassifier mGameOverMenu;
+
+    public SceneReference mGameScene;
 
     public bool IsConnected() { return PhotonNetwork.IsConnected; }
     public bool IsMasterClient() { return PhotonNetwork.IsMasterClient; }
@@ -39,8 +42,9 @@ public class NetworkManager : Singleton<NetworkManager>
         NetworkManager.Instance.mNetworkCallbacks.OnJoinRandomFailedDelegate += JoinRandomRoomFailed;
         NetworkManager.Instance.mNetworkCallbacks.OnJoinedRoomDelegate += CreateRoomSuccess;
         NetworkManager.Instance.mNetworkCallbacks.OnCreateRoomFailedDelegate += CreateRoomFailed;
-        NetworkManager.Instance.mNetworkCallbacks.OnCreateRoomDelegate += CreateRoomSuccess;
+        //NetworkManager.Instance.mNetworkCallbacks.OnCreateRoomDelegate += CreateRoomSuccess;
         Photon.Pun.PhotonNetwork.NetworkingClient.EventReceived += OnPhotonEvents;
+        MultiSceneManager.Instance.mOnSceneUnload.AddListener(OnSceneUnload);
     }
 
     private void OnDisable()
@@ -51,8 +55,9 @@ public class NetworkManager : Singleton<NetworkManager>
         NetworkManager.Instance.mNetworkCallbacks.OnJoinRandomFailedDelegate -= JoinRandomRoomFailed;
         NetworkManager.Instance.mNetworkCallbacks.OnJoinedRoomDelegate -= CreateRoomSuccess;
         NetworkManager.Instance.mNetworkCallbacks.OnCreateRoomFailedDelegate -= CreateRoomFailed;
-        NetworkManager.Instance.mNetworkCallbacks.OnCreateRoomDelegate -= CreateRoomSuccess;
-        Photon.Pun.PhotonNetwork.NetworkingClient.EventReceived -= OnPhotonEvents;
+        //NetworkManager.Instance.mNetworkCallbacks.OnCreateRoomDelegate -= CreateRoomSuccess;
+        PhotonNetwork.NetworkingClient.EventReceived -= OnPhotonEvents;
+        MultiSceneManager.Instance.mOnSceneUnload.RemoveListener(OnSceneUnload);
     }
 
     void Awake()
@@ -148,7 +153,8 @@ public class NetworkManager : Singleton<NetworkManager>
 
     public void LeaveRoom()
     {
-        StartCoroutine(UnloadScenes());        
+        MenuManager.Instance.ShowMenu(mSceneLoadingMenu);
+        MultiSceneManager.Instance.UnloadScene(mGameScene.SceneName);
     }
 
     public void PlayerLeftRoom(Photon.Realtime.Player aPlayer)
@@ -158,19 +164,17 @@ public class NetworkManager : Singleton<NetworkManager>
         {
             mCurrentPlayer = null;
         }
-        StartCoroutine(UnloadScenes());
+        LeaveRoom();
     }
 
-    IEnumerator UnloadScenes()
+    void OnSceneUnload(List<string> pScenes)
     {
-        for (int i = UnityEngine.SceneManagement.SceneManager.sceneCount-1; i > 1; i--) //so that the scenes at index 1 and index 0, UI and Core, are not unloaded
+        if(pScenes.Contains(mGameScene.SceneName))
         {
-            yield return UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i));
+            MenuManager.Instance.HideMenu(mGameOverMenu);
+            MenuManager.Instance.ShowMenu(mStartMenu);
+            MenuManager.Instance.HideMenu(mSceneLoadingMenu);
         }
-
-        MenuManager.Instance.HideMenu(mGameOverMenu);
-        MenuManager.Instance.ShowMenu(mStartMenu);
-        MenuManager.Instance.HideLoad();
     }
 
     public void RaiseEvent(byte aEventCode, object[] aContent, RaiseEventOptions aRaiseEventOptions, SendOptions aSendOptions)
@@ -214,15 +218,15 @@ public class NetworkManager : Singleton<NetworkManager>
 
             gameover.ShowGameOver(message, ((int)DataHandler.Instance.mScore.mScore).ToString());
         }
-        if (eventCode == NetworkManager.EVNT_GAMEOVER)
-        {
-            object[] data = (object[])photonEvent.CustomData;
-            string message = (string)data[0];
+        //if (eventCode == NetworkManager.EVNT_GAMEOVER)
+        //{
+        //    object[] data = (object[])photonEvent.CustomData;
+        //    string message = (string)data[0];
 
-            MenuManager.Instance.ShowLoad();
-            UnloadScenes();
-            MenuManager.Instance.HideMenu(mGameOverMenu);
-        }
+        //    MenuManager.Instance.ShowLoad();
+        //    UnloadScenes();
+        //    MenuManager.Instance.HideMenu(mGameOverMenu);
+        //}
     }
 
 }

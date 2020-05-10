@@ -210,9 +210,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mNetworkCallbacks: {fileID: 160530157}
+  mSceneLoadingMenu: {fileID: 11400000, guid: 4b507e6e1a6e1764fa9d6ca58e582a96, type: 2}
   mStartMenu: {fileID: 11400000, guid: 2f143ba69c9640948afcebc5eaea560e, type: 2}
   mRoomMenu: {fileID: 11400000, guid: be90231f80264d34e9922678d439088c, type: 2}
   mGameOverMenu: {fileID: 11400000, guid: 8741890afa7b29442adb5dc41aef5758, type: 2}
+  mGameScene:
+    sceneAsset: {fileID: 102900000, guid: 56034b915c83d2a4b98ad528565a5fab, type: 3}
+    scenePath: Assets/Game/Scenes/Level1.unity
+    sceneName: Level1
 --- !u!114 &160530157
 MonoBehaviour:
   m_ObjectHideFlags: 0

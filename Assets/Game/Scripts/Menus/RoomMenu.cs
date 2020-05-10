@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class RoomMenu : Menu
 {
-    [SerializeField] SceneReference mGameScene;
 
-    [SerializeField] MenuClassifier mSceneLoadingMenu;
 
     [SerializeField] Button mStartSinglePlayerButton;
 
@@ -55,28 +53,25 @@ public class RoomMenu : Menu
     public void StartGameplay()
     {
         //Debug.Log("Loading Game Scene..");
-        MenuManager.Instance.ShowMenu(mSceneLoadingMenu);
+        MenuManager.Instance.ShowMenu(NetworkManager.Instance.mSceneLoadingMenu);
         mStartSinglePlayerButton.interactable = false;
 
         Photon.Pun.PhotonNetwork.CurrentRoom.IsOpen = false;
-        object[] content = new object[] { mGameScene.SceneName };
+        object[] content = new object[] { NetworkManager.Instance.mGameScene.SceneName };
         //Debug.Log("RAISING EVENT EVNT_LOADGAMESCENE + " + NetworkManager.EVNT_GAMESCENELOADED.ToString());
         NetworkManager.Instance.RaiseEvent(NetworkManager.EVNT_LOADGAMESCENE, content,
             new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.All },
             new ExitGames.Client.Photon.SendOptions { Reliability = true });
-        //MultiSceneManager.Instance.LoadScene(mGameScene.SceneName);
+        //MultiSceneManager.Instance.LoadScene(NetworkManager.Instance.mGameScene.SceneName);
     }
 
     public void GameSceneLoaded(List<string> scenes)
     {
         //Debug.Log("SceneLoaded Event Called");
         object[] content= {1};
-        string scenesLoaded = "";
         foreach (string s in scenes)
         {
-            scenesLoaded += s + ",";
-
-            if (s == mGameScene.SceneName)
+            if (s == NetworkManager.Instance.mGameScene.SceneName)
             {
                 UnityEngine.SceneManagement.SceneManager.SetActiveScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName(s));
             }

@@ -8,11 +8,10 @@ public class LevelManager : Singleton<LevelManager>
 {
     [SerializeField] string mLevelDataPrefabName;
     [SerializeField] string mPlayerDataPrefabName;
+    [SerializeField] float mCurrentFlow = 10.0f;
     [SerializeField] MenuClassifier mSceneLoadingMenuClassifier;
     public Cinemachine.CinemachineVirtualCamera mLevelCam;
     [SerializeField] MenuClassifier mHUDClassifier;
-
-    Vector2 gravity;
     int totalScenesLoaded = 0;
 
     private void OnEnable()
@@ -30,7 +29,6 @@ public class LevelManager : Singleton<LevelManager>
         //if (NetworkManager.Instance.IsMasterClient())
         //{
         StartCoroutine(LoadLevelData());
-        gravity = Physics2D.gravity;
         Physics2D.gravity = Vector2.zero;
         //}
     }
@@ -120,7 +118,7 @@ public class LevelManager : Singleton<LevelManager>
             if (totalScenesLoaded == Photon.Pun.PhotonNetwork.CurrentRoom.PlayerCount)
             {
                 MenuManager.Instance.HideMenu(mSceneLoadingMenuClassifier);
-                Physics2D.gravity = gravity;
+                Physics2D.gravity = new Vector2(mCurrentFlow,0);
                 DataHandler.Instance.mGameStarted = true;
                 MenuManager.Instance.ShowMenu(mHUDClassifier);
             }
