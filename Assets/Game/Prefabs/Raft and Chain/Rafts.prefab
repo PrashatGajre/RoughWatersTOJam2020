@@ -854,8 +854,7 @@ MonoBehaviour:
   mMaximumChainLength: 30
   mGameStartChainLength: 10
   mTriggerThreshold: 0.75
-  mChainObject: {fileID: 1109223238076519323, guid: 7fb3462c29b1e3c48ba5aaf4656d58c2,
-    type: 3}
+  mChainObject: ConnecterChain
   mLeftRaft: {fileID: 5865249965320430248}
   mLeftChainJoint: {fileID: 5865249965794657058}
   mLeftEndChain: {fileID: 5865249966203912402}

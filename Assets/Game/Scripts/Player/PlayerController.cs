@@ -121,24 +121,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         Vector2 aForceApplied = mMoveVector *
             mCurrentRaft.mSpeed * (mMoveVector.x < 0 ? mReverseNegateMultiplier : 1.0f)
             * Time.deltaTime;
-        if(aForceApplied.sqrMagnitude > 0.0f)
-        {
-            mCurrentRaft.mFatigue -= mCurrentRaft.mFatigueDecreaseRate * Time.deltaTime;
-            if(mCurrentRaft.mFatigue <= 0.0f)
-            {
-                mCurrentRaft.mFatigue = 0;
-                return;
-            }
-        }
-        else
-        {
-            mCurrentRaft.mFatigue += mCurrentRaft.mFatigueIncreaseRate * Time.deltaTime;
-            if(mCurrentRaft.mFatigue >= mCurrentRaft.mMaxFatigue)
-            {
-                mCurrentRaft.mFatigue = mCurrentRaft.mMaxFatigue;
-            }
-        }
-        mCurrentRaft.mRigidbody.AddRelativeForce(aForceApplied, ForceMode2D.Impulse);
+        mCurrentRaft.photonView.RPC("ApplyRelativeForce", PhotonNetwork.MasterClient, aForceApplied);
     }
 
     public void OnMoveStick(InputAction.CallbackContext pCallbackContext)

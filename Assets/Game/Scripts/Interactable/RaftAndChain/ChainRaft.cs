@@ -48,18 +48,18 @@ public class ChainRaft : Raft
             mChainTimer = 0.0f;
             if(mAddChainJoint)
             {
-                AddNewChainConnection();
+                photonView.RPC("AddChainRPC", PhotonNetwork.MasterClient, 1);
             }
             if(mRemoveChainJoint)
             {
-                RemoveChainConnection();
+                photonView.RPC("RemoveChainRPC", PhotonNetwork.MasterClient, 1);
             }
         }
     }
 
     void LateUpdate()
     {
-        if (mLeftEndChain.mConnectedFrom != null)
+        if (photonView.IsMine)
         {
             ChainDisconnectCorrection(mLeftEndChain, mLeftRaft);
             ChainDisconnectCorrection(mRightEndChain, mRightRaft);
@@ -77,6 +77,19 @@ public class ChainRaft : Raft
             pMovingRaft.transform.position += aMoveOffset;
         }
     }
+
+    [PunRPC]
+    void AddChainRPC(short pPlaceHolder, PhotonMessageInfo pInfo)
+    {
+        AddNewChainConnection();
+    }
+    [PunRPC]
+    void RemoveChainRPC(short pPlaceHolder, PhotonMessageInfo pInfo)
+    {
+        RemoveChainConnection();
+    }
+
+
 
     void AddNewChainConnection()
     {

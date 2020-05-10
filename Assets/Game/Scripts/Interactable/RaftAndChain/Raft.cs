@@ -41,10 +41,13 @@ public class Raft : MonoBehaviourPun, IPunObservable
             {
                 mSelectedSprite.SetActive(false);
             }
-            mFatigue += mFatigueIncreaseRate * Time.deltaTime;
-            if (mFatigue >= mMaxFatigue)
+            if(photonView.IsMine)
             {
-                mFatigue = mMaxFatigue;
+                mFatigue += mFatigueIncreaseRate * Time.deltaTime;
+                if (mFatigue >= mMaxFatigue)
+                {
+                    mFatigue = mMaxFatigue;
+                }
             }
         }
         else if(!mSelectedSprite.activeInHierarchy)
@@ -55,16 +58,39 @@ public class Raft : MonoBehaviourPun, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream pStream, PhotonMessageInfo pInfo)
     {
-        pStream.Serialize(ref mSelected);
         pStream.Serialize(ref mHealth);
         pStream.Serialize(ref mFatigue);
     }
 
     void FixedUpdate()
     {
-        //if(photonView.IsMine)
-        //{
-        mRigidbody.gravityScale = mGravityScaleMultiplier * (mSelected ? mSelectedGravityScale : mUnSelectedGravityScale);
-        //}
+        if (photonView.IsMine)
+        {
+            mRigidbody.gravityScale = mGravityScaleMultiplier * (mSelected ? mSelectedGravityScale : mUnSelectedGravityScale);
+        }
     }
+
+    [PunRPC]
+    public void ApplyRelativeForce(Vector2 pForce, PhotonMessageInfo pInfo)
+    {
+        if (pForce.sqrMagnitude > 0.0f)
+        {
+            mFatigue -= mFatigueDecreaseRate * Time.deltaTime;
+            if (mFatigue <= 0.0f)
+            {
+                mFatigue = 0;
+                return;
+            }
+        }
+        else
+        {
+            mFatigue += mFatigueIncreaseRate * Time.deltaTime;
+            if (mFatigue >= mMaxFatigue)
+            {
+                mFatigue = mMaxFatigue;
+            }
+        }
+        mRigidbody.AddRelativeForce(pForce, ForceMode2D.Impulse);
+    }
+
 }
