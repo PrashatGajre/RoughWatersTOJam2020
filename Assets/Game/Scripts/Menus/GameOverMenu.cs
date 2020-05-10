@@ -27,6 +27,6 @@ public class GameOverMenu : Menu
         MenuManager.Instance.HideMenu(mMenuClassifier);
 
         Photon.Pun.PhotonNetwork.LeaveRoom();
-
+        NetworkManager.Instance.LeaveRoom();
     }
 }

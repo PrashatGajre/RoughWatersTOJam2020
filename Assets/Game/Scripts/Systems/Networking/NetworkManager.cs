@@ -24,7 +24,7 @@ public class NetworkManager : Singleton<NetworkManager>
 
     [SerializeField] public NetworkCallbacks mNetworkCallbacks;
 
-    [SerializeField] MenuClassifier mStartMenu;
+    [SerializeField] public MenuClassifier mStartMenu;
     [SerializeField] MenuClassifier mRoomMenu;
     [SerializeField] MenuClassifier mGameOverMenu;
 
@@ -188,7 +188,7 @@ public class NetworkManager : Singleton<NetworkManager>
 
     public void OnPhotonEvents(ExitGames.Client.Photon.EventData photonEvent) 
     {
-        Debug.Log("PHOTON EVENT RECEIVED : " + photonEvent.Code.ToString());
+        //Debug.Log("PHOTON EVENT RECEIVED : " + photonEvent.Code.ToString());
 
         byte eventCode = photonEvent.Code;
 

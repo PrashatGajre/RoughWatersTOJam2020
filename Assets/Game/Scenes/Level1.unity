@@ -168,6 +168,7 @@ MonoBehaviour:
   mPlayerDataPrefabName: MainPlayer
   mSceneLoadingMenuClassifier: {fileID: 11400000, guid: 4b507e6e1a6e1764fa9d6ca58e582a96,
     type: 2}
+  mHUDClassifier: {fileID: 11400000, guid: 77703f461d87a534cb57fb6629385bf5, type: 2}
   mLevelCam: {fileID: 1183811619}
 --- !u!1 &267032250
 GameObject:

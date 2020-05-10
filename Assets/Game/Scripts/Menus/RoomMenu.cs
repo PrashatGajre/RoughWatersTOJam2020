@@ -53,12 +53,13 @@ public class RoomMenu : Menu
 
     public void StartGameplay()
     {
-        Debug.Log("Loading Game Scene..");
+        //Debug.Log("Loading Game Scene..");
         MenuManager.Instance.ShowMenu(mSceneLoadingMenu);
+        mStartSinglePlayerButton.interactable = false;
 
         Photon.Pun.PhotonNetwork.CurrentRoom.IsOpen = false;
         object[] content = new object[] { mGameScene.SceneName };
-        Debug.Log("RAISING EVENT EVNT_LOADGAMESCENE + " + NetworkManager.EVNT_GAMESCENELOADED.ToString());
+        //Debug.Log("RAISING EVENT EVNT_LOADGAMESCENE + " + NetworkManager.EVNT_GAMESCENELOADED.ToString());
         NetworkManager.Instance.RaiseEvent(NetworkManager.EVNT_LOADGAMESCENE, content,
             new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.All },
             new ExitGames.Client.Photon.SendOptions { Reliability = true });
@@ -67,7 +68,7 @@ public class RoomMenu : Menu
 
     public void GameSceneLoaded(List<string> scenes)
     {
-        Debug.Log("SceneLoaded Event Called");
+        //Debug.Log("SceneLoaded Event Called");
         object[] content= {1};
         string scenesLoaded = "";
         foreach (string s in scenes)
@@ -80,7 +81,7 @@ public class RoomMenu : Menu
             }
         }
 
-        Debug.Log("RAISING EVENT EVNT_GAMESCENELOADED + " + NetworkManager.EVNT_GAMESCENELOADED.ToString());
+        //Debug.Log("RAISING EVENT EVNT_GAMESCENELOADED + " + NetworkManager.EVNT_GAMESCENELOADED.ToString());
         NetworkManager.Instance.RaiseEvent(NetworkManager.EVNT_GAMESCENELOADED, content,
             new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.All },
             new ExitGames.Client.Photon.SendOptions { Reliability = true });
@@ -90,7 +91,7 @@ public class RoomMenu : Menu
     public void OnNetworkGameScenesLoaded(ExitGames.Client.Photon.EventData photonEvent)
     {
 
-        Debug.Log("PHOTON EVENT RECEIVED : " + photonEvent.Code.ToString());
+        //Debug.Log("PHOTON EVENT RECEIVED : " + photonEvent.Code.ToString());
 
         byte eventCode = photonEvent.Code;
         bool allPlayerScenesLoaded = false;
@@ -119,6 +120,7 @@ public class RoomMenu : Menu
         {
             LevelManager.Instance.Init();
             MenuManager.Instance.HideMenu(mMenuClassifier);
+            mStartSinglePlayerButton.interactable = true;
         }
     }
 

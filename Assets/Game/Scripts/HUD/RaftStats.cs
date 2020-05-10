@@ -19,11 +19,14 @@ public class RaftStats : MonoBehaviour
 
     private void OnEnable()
     {
-        for (int aI = 0; aI < DataHandler.Instance.mActiveRafts.Length; aI++)
+        if (DataHandler.IsValidSingleton())
         {
-            if (DataHandler.Instance.mActiveRafts[aI].mRaftIndex == mRaftType)
+            for (int aI = 0; aI < DataHandler.Instance.mActiveRafts.Length; aI++)
             {
-                mReferenceRaft = DataHandler.Instance.mActiveRafts[aI];
+                if (DataHandler.Instance.mActiveRafts[aI].mRaftIndex == mRaftType)
+                {
+                    mReferenceRaft = DataHandler.Instance.mActiveRafts[aI];
+                }
             }
         }
     }

@@ -44,5 +44,6 @@ public class Startup : MonoBehaviour
 	{
 		MultiSceneManager.Instance.mOnSceneLoad.RemoveListener(SceneLoadedCallback);
 		MenuManager.Instance.HideLoad();
+		MenuManager.Instance.ShowMenu(NetworkManager.Instance.mStartMenu);
 	}
 }

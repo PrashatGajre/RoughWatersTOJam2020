@@ -212,7 +212,7 @@ MonoBehaviour:
   mNetworkCallbacks: {fileID: 160530157}
   mStartMenu: {fileID: 11400000, guid: 2f143ba69c9640948afcebc5eaea560e, type: 2}
   mRoomMenu: {fileID: 11400000, guid: be90231f80264d34e9922678d439088c, type: 2}
-  mGameOverMenu: {fileID: 0}
+  mGameOverMenu: {fileID: 11400000, guid: 8741890afa7b29442adb5dc41aef5758, type: 2}
 --- !u!114 &160530157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f5cf0d20de26004aa187d195897a057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mInGameHUD: {fileID: 11400000, guid: 77703f461d87a534cb57fb6629385bf5, type: 2}
+  mGameHUD: {fileID: 0}
   mScoreScaleUp: {x: 2, y: 2, z: 2}
   mScoreMultiplierScaleUp: {x: 2, y: 2, z: 2}
   mScaleUpEffectTime: 0.3

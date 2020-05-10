@@ -10,6 +10,7 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] string mPlayerDataPrefabName;
     [SerializeField] MenuClassifier mSceneLoadingMenuClassifier;
     public Cinemachine.CinemachineVirtualCamera mLevelCam;
+    [SerializeField] MenuClassifier mHUDClassifier;
 
     Vector2 gravity;
 
@@ -60,24 +61,24 @@ public class LevelManager : Singleton<LevelManager>
 
         /******SETUP PLAYER HERE*******/
         PlayerController[] playerControllers = GameObject.FindObjectsOfType<PlayerController>();
-        Debug.Log("PLAYER CONTROLLERS FOUND : " + playerControllers.Length);
+        //Debug.Log("PLAYER CONTROLLERS FOUND : " + playerControllers.Length);
         //DataHandler dataHandler = GameObject.FindObjectOfType<DataHandler>();
                 
         foreach (PlayerController pc in playerControllers)
         {
-            Debug.Log("PLAYER CONTROLLER ITERATION");
+            //Debug.Log("PLAYER CONTROLLER ITERATION");
             Photon.Pun.PhotonView pcView = pc.gameObject.GetComponent<Photon.Pun.PhotonView>();
             if (pcView != null)
             {
                 if (pcView.IsMine)
                 {
-                    Debug.Log("PHOTONVIEW IS MINE");
+                    //Debug.Log("PHOTONVIEW IS MINE");
                     foreach (Raft activeRaft in DataHandler.Instance.mActiveRafts) 
                     {
-                        Debug.Log("ITERATING ACTIVE RAFTS");
+                        //Debug.Log("ITERATING ACTIVE RAFTS");
                         if (!activeRaft.mSelected)
                         {
-                            Debug.Log("ACTIVE RAFT FOUND : " + activeRaft.gameObject.name);
+                            //Debug.Log("ACTIVE RAFT FOUND : " + activeRaft.gameObject.name);
                             activeRaft.mSelected = true;
                             ExitGames.Client.Photon.Hashtable customProperties = Photon.Pun.PhotonNetwork.CurrentRoom.CustomProperties;
                             bool[] selectedRafts = (bool[])customProperties["selectedRafts"];
@@ -102,7 +103,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void OnSceneReadyEvent(object[] aContent)
     {
-        Debug.Log("RAISING EVENT EVNT_GAMESCENEREADY");
+        //Debug.Log("RAISING EVENT EVNT_GAMESCENEREADY");
         NetworkManager.Instance.RaiseEvent(NetworkManager.EVNT_GAMESCENEREADY, aContent, 
             new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.All }, 
             new ExitGames.Client.Photon.SendOptions { Reliability = true });
@@ -117,16 +118,34 @@ public class LevelManager : Singleton<LevelManager>
             MenuManager.Instance.HideMenu(mSceneLoadingMenuClassifier);
             Physics2D.gravity = gravity;
             DataHandler.Instance.mGameStarted = true;
+            MenuManager.Instance.ShowMenu(mHUDClassifier);
         }
+        if (eventCode == NetworkManager.EVNT_GAMELOST)
+        {
+            object[] data = (object[])aPhotonEvent.CustomData;
+            string message = (string)data[0];
 
+            DataHandler.Instance.mGameStarted = false;
+            Physics2D.gravity = Vector2.zero;
+            MenuManager.Instance.HideMenu(mHUDClassifier);
+        }
+        if (eventCode == NetworkManager.EVNT_GAMEWON)
+        {
+            object[] data = (object[])aPhotonEvent.CustomData;
+            string message = (string)data[0];
+
+            DataHandler.Instance.mGameStarted = false;
+            Physics2D.gravity = Vector2.zero;
+            MenuManager.Instance.HideMenu(mHUDClassifier);
+        }
     }
 
     public void SpawnPlayer()
     {
-        Debug.Log("Creating Player");
+        //Debug.Log("Creating Player");
         GameObject player = Photon.Pun.PhotonNetwork.Instantiate(mPlayerDataPrefabName, Vector3.zero, Quaternion.identity);
-        Debug.Log("Creating Created");
+        //Debug.Log("Creating Created");
         player.name = Photon.Pun.PhotonNetwork.NickName;
-        Debug.Log("Creating Nickname Changed");
+        //Debug.Log("Creating Nickname Changed");
     }
 }
