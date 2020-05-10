@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,7 +10,7 @@ public class ChainRaft : Raft
     [SerializeField] int mMaximumChainLength = 30;
     [SerializeField] int mGameStartChainLength = 10;
     [SerializeField] float mTriggerThreshold = 0.75f;
-    [SerializeField] GameObject mChainObject;
+    [SerializeField] string mChainObject = "ConnecterChain";
     [SerializeField] Raft mLeftRaft;
     [SerializeField] Chain mLeftChainJoint;
     [SerializeField] Chain mLeftEndChain;
@@ -103,7 +104,8 @@ public class ChainRaft : Raft
 
     void ConnectionSetup(Chain pMainChainJoint, Raft pMovingRaft, bool pEnd = false)
     {
-        GameObject aChainObject = Instantiate(mChainObject, mChainParent, false);
+        GameObject aChainObject = PhotonNetwork.Instantiate(mChainObject, mChainParent.position, Quaternion.identity);
+        aChainObject.transform.SetParent(mChainParent);
         Chain aChain = aChainObject.GetComponent<Chain>();
         Chain aCurrentConnectedChain = pMainChainJoint.mHingeJoint.connectedBody.gameObject.GetComponent<Chain>();
         Vector3 aAdditionOffset = Vector3.zero;
@@ -155,11 +157,15 @@ public class ChainRaft : Raft
         Vector3 aAdditionOffset = (aConnectedFrom.transform.position - pMainChainJoint.transform.position).normalized * aChain.mChainCollider.size.y;
         pMainChainJoint.transform.position += aAdditionOffset;
         pMovingRaft.transform.position += aAdditionOffset;
-        Destroy(aChain.gameObject);
+        PhotonNetwork.Destroy(aChain.gameObject);
     }
 
     public void OnChainLengthChange(InputAction.CallbackContext pCallbackContext)
     {
+        if(!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         if (DataHandler.Instance.mGameStarted)
         {
             float aChainLengthDelta = (float)pCallbackContext.ReadValueAsObject();
