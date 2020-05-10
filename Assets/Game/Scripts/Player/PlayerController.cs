@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPun, IPunObservable
 {
     [SerializeField] float mChangeRaftThreshold = 0.95f;
     [SerializeField] float mDelayBetweenShifting = 0.5f;
@@ -13,14 +14,34 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Temporary Assignment")]
     public Raft mCurrentRaft;
     float mCurrentShiftDelay = -1.0f;
-    void Start()
+
+    private void Start()
     {
-        mCurrentRaft.mSelected = true;
+        if (photonView.IsMine)
+        {
+            var actionEventArray = GameObject.FindObjectOfType<PlayerInput>().actionEvents;
+
+            foreach (var actionEvent in actionEventArray)
+            {
+                if (actionEvent.actionName.Contains("MoveRaft"))
+                {
+                    actionEvent.AddListener(OnMoveStick);
+                }
+                else if (actionEvent.actionName.Contains("ChangeRaft"))
+                {
+                    actionEvent.AddListener(OnChangeRaft);
+                }
+            }
+        }
     }
 
     void Update()
     {
-        if(mCurrentShiftDelay < 0.0f)
+        if (mCurrentRaft == null)
+        {
+            return;
+        }
+        if (mCurrentShiftDelay < 0.0f)
         {
             return;
         }
@@ -83,6 +104,10 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (mCurrentRaft == null)
+        {
+            return; 
+        }
         Vector2 aForceApplied = mMoveVector *
             mCurrentRaft.mSpeed * (mMoveVector.x < 0 ? mReverseNegateMultiplier : 1.0f)
             * Time.deltaTime;
@@ -125,5 +150,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        //throw new System.NotImplementedException();
+    }
 }

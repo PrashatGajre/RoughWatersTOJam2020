@@ -5,7 +5,7 @@ using UnityEngine;
 public class DataHandler : Singleton<DataHandler>
 {
     public Raft[] mActiveRafts;
-    [SerializeField] Transform mRaftTargetGroup;
+    public Transform mRaftTargetGroup;
     [SerializeField] float mLevelTraversalScore = 10.0f;
     [HideInInspector] public float mCurrentScore = 0;
     [HideInInspector] public float mScoreMultiplier = 1.0f;

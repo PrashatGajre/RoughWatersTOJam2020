@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] string mLevelData;
+    [SerializeField] string mLevelDataPrefabName;
+    [SerializeField] string mPlayerDataPrefabName;
     [SerializeField] MenuClassifier mSceneLoadingMenuClassifier;
-
+    [SerializeField] Cinemachine.CinemachineVirtualCamera mLevelCam;
+    
     private void OnEnable()
     {
         Photon.Pun.PhotonNetwork.NetworkingClient.EventReceived += IsSceneReady;
@@ -18,17 +20,19 @@ public class LevelManager : MonoBehaviour
         Photon.Pun.PhotonNetwork.NetworkingClient.EventReceived -= IsSceneReady;
     }
 
-    private void Init()
+    public void Init()
     {
-        MenuManager.Instance.ShowLoad();
-        StartCoroutine(LoadLevelData());
+        if (NetworkManager.Instance.IsMasterClient())
+        {
+            StartCoroutine(LoadLevelData());
+        }
     }
 
     IEnumerator LoadLevelData()
     {
         if (NetworkManager.Instance.IsMasterClient())
         {
-            //GameObject levelSetup = Photon.Pun.PhotonNetwork.Instantiate(mLevelData, Vector3.zero, Quaternion.identity);
+            GameObject levelSetup = Photon.Pun.PhotonNetwork.Instantiate(mLevelDataPrefabName, Vector3.zero, Quaternion.identity);
 
             /*
              * 
@@ -37,23 +41,49 @@ public class LevelManager : MonoBehaviour
             */
         }
         yield return new WaitForSeconds(3.0f);
+
         SpawnPlayer();
 
         yield return new WaitForSeconds(2.0f);
-        Camera[] cameras = GameObject.FindObjectsOfType<Camera>();
-        foreach (Camera camera in cameras)
+
+        if (mLevelCam == null)
         {
-            camera.enabled = false;
+            mLevelCam = GameObject.FindObjectOfType<Cinemachine.CinemachineVirtualCamera>();
+            Debug.Log(mLevelCam.gameObject.name);
         }
-        yield return new WaitForSeconds(0.5f);
+        mLevelCam.Follow = DataHandler.Instance.mActiveRafts[(int)Raft.RaftType.Red].transform;
+
+        /******SETUP PLAYER HERE*******/
+        PlayerController[] playerControllers = GameObject.FindObjectsOfType<PlayerController>();
+        Debug.Log("PLAYER CONTROLLERS FOUND : " + playerControllers.Length);
+        //DataHandler dataHandler = GameObject.FindObjectOfType<DataHandler>();
+                
+        foreach (PlayerController pc in playerControllers)
+        {
+            Debug.Log("PLAYER CONTROLLER ITERATION");
+            Photon.Pun.PhotonView pcView = pc.gameObject.GetComponent<Photon.Pun.PhotonView>();
+            if (pcView != null)
+            {
+                if (pcView.IsMine)
+                {
+                    Debug.Log("PHOTONVIEW IS MINE");
+                    foreach (Raft activeRaft in DataHandler.Instance.mActiveRafts) 
+                    {
+                        Debug.Log("ITERATING ACTIVE RAFTS");
+                        if (!activeRaft.mSelected)
+                        {
+                            Debug.Log("ACTIVE RAFT FOUND : " + activeRaft.gameObject.name);
+                            activeRaft.mSelected = true;
+                            pc.mCurrentRaft = activeRaft;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        yield return new WaitForSeconds(3.0f);
      
-        /*
-         
-         
-        *****SETUP PLAYER HERE******
-         
-         
-         */
 
         OnSceneReadyEvent(new object[]{1});
     }
@@ -78,12 +108,6 @@ public class LevelManager : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        /*
-         
-         
-        *****SPAWN PLAYER HERE******
-         
-         
-         */
+        GameObject player = Photon.Pun.PhotonNetwork.Instantiate(mPlayerDataPrefabName, Vector3.zero, Quaternion.identity);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-public class Raft : MonoBehaviour/*Pun,IPunObservable*/
+public class Raft : MonoBehaviourPun, IPunObservable
 {
     public enum RaftType
     {
@@ -11,7 +11,7 @@ public class Raft : MonoBehaviour/*Pun,IPunObservable*/
         Yellow
     }
 
-    [HideInInspector] public bool mSelected;
+    [HideInInspector] public bool mSelected = false;
     [HideInInspector] public RaftType mRaftIndex;
     public float mSpeed = 50.0f;
     public float mFatigueDecreaseRate = 10.0f;
@@ -53,12 +53,12 @@ public class Raft : MonoBehaviour/*Pun,IPunObservable*/
         }
     }
 
-    //public void OnPhotonSerializeView(PhotonStream pStream, PhotonMessageInfo pInfo)
-    //{
-    //    pStream.Serialize(ref mSelected);
-    //    pStream.Serialize(ref mHealth);
-    //    pStream.Serialize(ref mFatigue);
-    //}
+    public void OnPhotonSerializeView(PhotonStream pStream, PhotonMessageInfo pInfo)
+    {
+        pStream.Serialize(ref mSelected);
+        pStream.Serialize(ref mHealth);
+        pStream.Serialize(ref mFatigue);
+    }
 
     void FixedUpdate()
     {

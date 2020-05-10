@@ -65,6 +65,11 @@ public class RoomMenu : Menu
         foreach (string s in scenes)
         {
             scenesLoaded += s + ",";
+
+            if (s == mGameScene.SceneName)
+            {
+                UnityEngine.SceneManagement.SceneManager.SetActiveScene(UnityEngine.SceneManagement.SceneManager.GetSceneByName(s));
+            }
         }
 
         Debug.Log("RAISING EVENT EVNT_GAMESCENELOADED + " + NetworkManager.EVNT_GAMESCENELOADED.ToString());
@@ -104,8 +109,8 @@ public class RoomMenu : Menu
 
         if (allPlayerScenesLoaded)
         {
+            GameObject.FindObjectOfType<LevelManager>().Init();
             MenuManager.Instance.HideMenu(mMenuClassifier);
-            MenuManager.Instance.HideMenu(mSceneLoadingMenu);
         }
     }
 
