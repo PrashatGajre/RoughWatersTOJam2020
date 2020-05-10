@@ -389,9 +389,9 @@ MonoBehaviour:
   - mAudioClip: {fileID: 8300000, guid: a366146410922db4bab70f9261f6dc44, type: 3}
     mAudioGroup: Sfx
   - mAudioClip: {fileID: 8300000, guid: 32eb7a66570a669408d6c0c94af418d2, type: 3}
-    mAudioGroup: Coin
+    mAudioGroup: Sfx
   - mAudioClip: {fileID: 8300000, guid: 26ce683d6e0dfa34d800ad91df77ad2e, type: 3}
-    mAudioGroup: Collect
+    mAudioGroup: Sfx
 --- !u!1 &324254571
 GameObject:
   m_ObjectHideFlags: 0
