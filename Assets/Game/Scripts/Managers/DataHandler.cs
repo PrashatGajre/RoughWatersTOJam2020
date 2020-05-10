@@ -36,6 +36,10 @@ public class DataHandler : Singleton<DataHandler>
 
     void Update()
     {
+        if (!mGameStarted)
+        {
+            return;
+        }
         if(!PhotonNetwork.IsMasterClient)
         {
             return;
