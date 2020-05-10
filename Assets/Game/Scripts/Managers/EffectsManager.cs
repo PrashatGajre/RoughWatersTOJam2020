@@ -23,24 +23,24 @@ public class EffectsManager : Singleton<EffectsManager>
 
     public void ScoreAddedEffect()
     {
-        ScaleRectEffect(mGameHUD.mScoreText.rectTransform);
+        ScaleRectEffect(mGameHUD.mScoreText.rectTransform, mScoreScaleUp, mDefaultScoreScale);
     }
 
     public void ScoreMultiplierAddedEffect()
     {
-        ScaleRectEffect(mGameHUD.mScoreMultiplierText.rectTransform);
+        ScaleRectEffect(mGameHUD.mScoreMultiplierText.rectTransform, mScoreMultiplierScaleUp, mDefaultScoreScale);
     }
 
-    void ScaleRectEffect(RectTransform pTransform)
+    void ScaleRectEffect(RectTransform pTransform, Vector3 pScaleUp, Vector3 pDefaultScale)
     {
         if (LeanTween.isTweening(pTransform))
         {
             LeanTween.cancel(pTransform);
         }
-        LeanTween.scale(pTransform, mScoreScaleUp, mScaleUpEffectTime).setDelay(mScaleUpEffectDelay).
+        LeanTween.scale(pTransform, pScaleUp, mScaleUpEffectTime).setDelay(mScaleUpEffectDelay).
             setOnComplete(() =>
             {
-                LeanTween.scale(pTransform, mDefaultScoreScale, mScaleDownEffectTime).setDelay(mScaleDownEffectDelay);
+                LeanTween.scale(pTransform, pDefaultScale, mScaleDownEffectTime).setDelay(mScaleDownEffectDelay);
             });
 
     }
