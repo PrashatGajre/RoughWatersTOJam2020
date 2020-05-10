@@ -14,7 +14,11 @@ public class GameWinTrigger : MonoBehaviour
         Raft aRaft = collision.GetComponent<Raft>();
         if(aRaft != null)
         {
-            //win game
+            //GAME WON
+            object[] content = new object[] { "WON" };
+            NetworkManager.Instance.RaiseEvent(NetworkManager.EVNT_GAMEWON, content,
+                new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.All },
+                new ExitGames.Client.Photon.SendOptions { Reliability = true });
         }
     }
 }

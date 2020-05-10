@@ -79,12 +79,12 @@ public class ChainRaft : Raft
     }
 
     [PunRPC]
-    void AddChainRPC(short pPlaceHolder, PhotonMessageInfo pInfo)
+    void AddChainRPC(int pPlaceHolder, PhotonMessageInfo pInfo)
     {
         AddNewChainConnection();
     }
     [PunRPC]
-    void RemoveChainRPC(short pPlaceHolder, PhotonMessageInfo pInfo)
+    void RemoveChainRPC(int pPlaceHolder, PhotonMessageInfo pInfo)
     {
         RemoveChainConnection();
     }

@@ -61,7 +61,11 @@ public class Obstacle : MonoBehaviour
                     if (pRaft.mHealth <= 0.0f)
                     {
                         pRaft.mHealth = 0.0f;
-                        //do gameover
+                        //GAME LOST
+                        object[] content = new object[] { "LOST" };
+                        NetworkManager.Instance.RaiseEvent(NetworkManager.EVNT_GAMELOST, content,
+                            new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.All },
+                            new ExitGames.Client.Photon.SendOptions { Reliability = true });
                     }
                     break;
                 }

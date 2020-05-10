@@ -14,6 +14,9 @@ public class NetworkManager : Singleton<NetworkManager>
     public static byte EVNT_LOADGAMESCENE = 1;
     public static byte EVNT_GAMESCENELOADED = 2;
     public static byte EVNT_GAMESCENEREADY = 3;
+    public static byte EVNT_GAMEWON = 4;
+    public static byte EVNT_GAMELOST = 5;
+    public static byte EVNT_GAMEOVER = 6;
 
     string mPlayerNickName;
 
@@ -156,7 +159,7 @@ public class NetworkManager : Singleton<NetworkManager>
             yield return UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i));
         }
 
-        MenuManager.Instance.ShowMenu(mRoomMenu);
+        MenuManager.Instance.ShowMenu(mStartMenu);
         MenuManager.Instance.HideLoad();
     }
 
