@@ -52,7 +52,7 @@ public class NetworkManager : Singleton<NetworkManager>
         NetworkManager.Instance.mNetworkCallbacks.OnJoinedRoomDelegate -= CreateRoomSuccess;
         NetworkManager.Instance.mNetworkCallbacks.OnCreateRoomFailedDelegate -= CreateRoomFailed;
         NetworkManager.Instance.mNetworkCallbacks.OnCreateRoomDelegate -= CreateRoomSuccess;
-        Photon.Pun.PhotonNetwork.NetworkingClient.EventReceived -= OnPhotonEvents
+        Photon.Pun.PhotonNetwork.NetworkingClient.EventReceived -= OnPhotonEvents;
     }
 
     private void Start()
@@ -193,6 +193,9 @@ public class NetworkManager : Singleton<NetworkManager>
             string message = (string)data[0];
 
             MenuManager.Instance.ShowMenu(mGameOverMenu);
+            GameOverMenu gameover = GameObject.FindObjectOfType<GameOverMenu>();
+
+            gameover.ShowGameOver(message, DataHandler.Instance.mScore.ToString());
         }
         if (eventCode == NetworkManager.EVNT_GAMEWON)
         {
@@ -200,13 +203,18 @@ public class NetworkManager : Singleton<NetworkManager>
             string message = (string)data[0];
 
             MenuManager.Instance.ShowMenu(mGameOverMenu);
+            GameOverMenu gameover = GameObject.FindObjectOfType<GameOverMenu>();
+
+            gameover.ShowGameOver(message, DataHandler.Instance.mScore.ToString());
         }
         if (eventCode == NetworkManager.EVNT_GAMEOVER)
         {
             object[] data = (object[])photonEvent.CustomData;
             string message = (string)data[0];
 
+            MenuManager.Instance.ShowLoad();
             UnloadScenes();
+            MenuManager.Instance.HideMenu(mGameOverMenu);
         }
     }
 
