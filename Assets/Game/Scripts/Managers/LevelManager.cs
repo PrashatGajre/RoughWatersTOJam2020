@@ -97,7 +97,7 @@ public class LevelManager : Singleton<LevelManager>
 
         yield return new WaitForSeconds(0.3f);
      
-
+        if(NetworkManager.Instance.IsMasterClient())
         OnSceneReadyEvent(new object[]{1});
     }
 

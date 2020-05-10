@@ -153,6 +153,7 @@ public class NetworkManager : Singleton<NetworkManager>
 
     public void PlayerLeftRoom(Photon.Realtime.Player aPlayer)
     {
+        PhotonNetwork.LeaveRoom();
         if (aPlayer == mCurrentPlayer)
         {
             mCurrentPlayer = null;
@@ -167,6 +168,7 @@ public class NetworkManager : Singleton<NetworkManager>
             yield return UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i));
         }
 
+        MenuManager.Instance.HideMenu(mGameOverMenu);
         MenuManager.Instance.ShowMenu(mStartMenu);
         MenuManager.Instance.HideLoad();
     }
