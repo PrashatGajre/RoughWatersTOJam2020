@@ -119,6 +119,24 @@ public class LevelManager : MonoBehaviour
             DataHandler.Instance.mGameStarted = true;
             MenuManager.Instance.ShowMenu(mHUDClassifier);
         }
+        if (eventCode == NetworkManager.EVNT_GAMELOST)
+        {
+            object[] data = (object[])aPhotonEvent.CustomData;
+            string message = (string)data[0];
+
+            DataHandler.Instance.mGameStarted = false;
+            Physics2D.gravity = Vector2.zero;
+            MenuManager.Instance.HideMenu(mHUDClassifier);
+        }
+        if (eventCode == NetworkManager.EVNT_GAMEWON)
+        {
+            object[] data = (object[])aPhotonEvent.CustomData;
+            string message = (string)data[0];
+
+            DataHandler.Instance.mGameStarted = false;
+            Physics2D.gravity = Vector2.zero;
+            MenuManager.Instance.HideMenu(mHUDClassifier);
+        }
     }
 
     public void SpawnPlayer()

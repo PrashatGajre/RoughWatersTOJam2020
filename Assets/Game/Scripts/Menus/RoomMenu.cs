@@ -55,6 +55,7 @@ public class RoomMenu : Menu
     {
         //Debug.Log("Loading Game Scene..");
         MenuManager.Instance.ShowMenu(mSceneLoadingMenu);
+        mStartSinglePlayerButton.interactable = false;
 
         Photon.Pun.PhotonNetwork.CurrentRoom.IsOpen = false;
         object[] content = new object[] { mGameScene.SceneName };
@@ -119,6 +120,7 @@ public class RoomMenu : Menu
         {
             GameObject.FindObjectOfType<LevelManager>().Init();
             MenuManager.Instance.HideMenu(mMenuClassifier);
+            mStartSinglePlayerButton.interactable = true;
         }
     }
 
