@@ -26,6 +26,7 @@ public class NetworkManager : Singleton<NetworkManager>
 
     [SerializeField] MenuClassifier mStartMenu;
     [SerializeField] MenuClassifier mRoomMenu;
+    [SerializeField] MenuClassifier mGameOverMenu;
 
     public bool IsConnected() { return PhotonNetwork.IsConnected; }
     public bool IsMasterClient() { return PhotonNetwork.IsMasterClient; }
@@ -39,6 +40,7 @@ public class NetworkManager : Singleton<NetworkManager>
         NetworkManager.Instance.mNetworkCallbacks.OnJoinedRoomDelegate += CreateRoomSuccess;
         NetworkManager.Instance.mNetworkCallbacks.OnCreateRoomFailedDelegate += CreateRoomFailed;
         NetworkManager.Instance.mNetworkCallbacks.OnCreateRoomDelegate += CreateRoomSuccess;
+        Photon.Pun.PhotonNetwork.NetworkingClient.EventReceived += OnPhotonEvents;
     }
 
     private void OnDisable()
@@ -50,6 +52,7 @@ public class NetworkManager : Singleton<NetworkManager>
         NetworkManager.Instance.mNetworkCallbacks.OnJoinedRoomDelegate -= CreateRoomSuccess;
         NetworkManager.Instance.mNetworkCallbacks.OnCreateRoomFailedDelegate -= CreateRoomFailed;
         NetworkManager.Instance.mNetworkCallbacks.OnCreateRoomDelegate -= CreateRoomSuccess;
+        Photon.Pun.PhotonNetwork.NetworkingClient.EventReceived -= OnPhotonEvents
     }
 
     private void Start()
@@ -176,6 +179,35 @@ public class NetworkManager : Singleton<NetworkManager>
     public void RemoveCallbackTarget(object aTarget)
     {
         PhotonNetwork.RemoveCallbackTarget(aTarget);
+    }
+
+    public void OnPhotonEvents(ExitGames.Client.Photon.EventData photonEvent) 
+    {
+        Debug.Log("PHOTON EVENT RECEIVED : " + photonEvent.Code.ToString());
+
+        byte eventCode = photonEvent.Code;
+
+        if (eventCode == NetworkManager.EVNT_GAMELOST)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            string message = (string)data[0];
+
+            MenuManager.Instance.ShowMenu(mGameOverMenu);
+        }
+        if (eventCode == NetworkManager.EVNT_GAMEWON)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            string message = (string)data[0];
+
+            MenuManager.Instance.ShowMenu(mGameOverMenu);
+        }
+        if (eventCode == NetworkManager.EVNT_GAMEOVER)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            string message = (string)data[0];
+
+            UnloadScenes();
+        }
     }
 
 }
