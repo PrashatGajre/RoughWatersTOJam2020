@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,7 +10,7 @@ public class ChainRaft : Raft
     [SerializeField] int mMaximumChainLength = 30;
     [SerializeField] int mGameStartChainLength = 10;
     [SerializeField] float mTriggerThreshold = 0.75f;
-    [SerializeField] GameObject mChainObject;
+    [SerializeField] string mChainObject = "ConnecterChain";
     [SerializeField] Raft mLeftRaft;
     [SerializeField] Chain mLeftChainJoint;
     [SerializeField] Chain mLeftEndChain;
@@ -26,12 +27,15 @@ public class ChainRaft : Raft
     protected override void Start()
     {
         base.Start();
-        ConnectionSetup(mRightChainJoint, mRightRaft);
-        ConnectionSetup(mLeftChainJoint, mLeftRaft);
-        mCurrentChainLength++;
-        for(int aI = 1; aI < mGameStartChainLength; aI ++)
+        if (photonView.IsMine)
         {
-            AddNewChainConnection();
+            ConnectionSetup(mRightChainJoint, mRightRaft);
+            ConnectionSetup(mLeftChainJoint, mLeftRaft);
+            mCurrentChainLength++;
+            for (int aI = 1; aI < mGameStartChainLength; aI++)
+            {
+                AddNewChainConnection();
+            }
         }
     }
 
@@ -44,19 +48,22 @@ public class ChainRaft : Raft
             mChainTimer = 0.0f;
             if(mAddChainJoint)
             {
-                AddNewChainConnection();
+                photonView.RPC("AddChainRPC", PhotonNetwork.MasterClient, 1);
             }
             if(mRemoveChainJoint)
             {
-                RemoveChainConnection();
+                photonView.RPC("RemoveChainRPC", PhotonNetwork.MasterClient, 1);
             }
         }
     }
 
     void LateUpdate()
     {
-        ChainDisconnectCorrection(mLeftEndChain, mLeftRaft);
-        ChainDisconnectCorrection(mRightEndChain, mRightRaft);
+        if (photonView.IsMine)
+        {
+            ChainDisconnectCorrection(mLeftEndChain, mLeftRaft);
+            ChainDisconnectCorrection(mRightEndChain, mRightRaft);
+        }
     }
 
     void ChainDisconnectCorrection(Chain pMainChainJoint, Raft pMovingRaft)
@@ -70,6 +77,19 @@ public class ChainRaft : Raft
             pMovingRaft.transform.position += aMoveOffset;
         }
     }
+
+    [PunRPC]
+    void AddChainRPC(int pPlaceHolder, PhotonMessageInfo pInfo)
+    {
+        AddNewChainConnection();
+    }
+    [PunRPC]
+    void RemoveChainRPC(int pPlaceHolder, PhotonMessageInfo pInfo)
+    {
+        RemoveChainConnection();
+    }
+
+
 
     void AddNewChainConnection()
     {
@@ -97,7 +117,8 @@ public class ChainRaft : Raft
 
     void ConnectionSetup(Chain pMainChainJoint, Raft pMovingRaft, bool pEnd = false)
     {
-        GameObject aChainObject = Instantiate(mChainObject, mChainParent, false);
+        GameObject aChainObject = PhotonNetwork.Instantiate(mChainObject, mChainParent.position, Quaternion.identity);
+        aChainObject.transform.SetParent(mChainParent);
         Chain aChain = aChainObject.GetComponent<Chain>();
         Chain aCurrentConnectedChain = pMainChainJoint.mHingeJoint.connectedBody.gameObject.GetComponent<Chain>();
         Vector3 aAdditionOffset = Vector3.zero;
@@ -149,19 +170,26 @@ public class ChainRaft : Raft
         Vector3 aAdditionOffset = (aConnectedFrom.transform.position - pMainChainJoint.transform.position).normalized * aChain.mChainCollider.size.y;
         pMainChainJoint.transform.position += aAdditionOffset;
         pMovingRaft.transform.position += aAdditionOffset;
-        Destroy(aChain.gameObject);
+        PhotonNetwork.Destroy(aChain.gameObject);
     }
 
     public void OnChainLengthChange(InputAction.CallbackContext pCallbackContext)
     {
-        float aChainLengthDelta = (float)pCallbackContext.ReadValueAsObject();
-        if(aChainLengthDelta <= -mTriggerThreshold)
+        if(!PhotonNetwork.IsMasterClient)
         {
-            mRemoveChainJoint = true;
+            return;
         }
-        else if(aChainLengthDelta >= mTriggerThreshold)
+        if (DataHandler.Instance.mGameStarted)
         {
-            mAddChainJoint = true;
+            float aChainLengthDelta = (float)pCallbackContext.ReadValueAsObject();
+            if (aChainLengthDelta <= -mTriggerThreshold)
+            {
+                mRemoveChainJoint = true;
+            }
+            else if (aChainLengthDelta >= mTriggerThreshold)
+            {
+                mAddChainJoint = true;
+            }
         }
     }
 

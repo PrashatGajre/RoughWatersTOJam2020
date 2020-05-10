@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-public class Raft : MonoBehaviour/*Pun,IPunObservable*/
+public class Raft : MonoBehaviourPun, IPunObservable
 {
     public enum RaftType
     {
@@ -11,7 +11,7 @@ public class Raft : MonoBehaviour/*Pun,IPunObservable*/
         Yellow
     }
 
-    [HideInInspector] public bool mSelected;
+    [HideInInspector] public bool mSelected = false;
     [HideInInspector] public RaftType mRaftIndex;
     public float mSpeed = 50.0f;
     public float mFatigueDecreaseRate = 10.0f;
@@ -25,11 +25,12 @@ public class Raft : MonoBehaviour/*Pun,IPunObservable*/
     [HideInInspector] public float mGravityScaleMultiplier = 1.0f;
     [SerializeField] float mSelectedGravityScale = 0.65f;
     [SerializeField] float mUnSelectedGravityScale = 1.0f;
-
+    float mPreviousHealth = 0;
     protected virtual void Start()
     {
         mHealth = mMaxHealth;
         mFatigue = mMaxFatigue;
+        mPreviousHealth = mHealth;
     }
 
 
@@ -41,10 +42,13 @@ public class Raft : MonoBehaviour/*Pun,IPunObservable*/
             {
                 mSelectedSprite.SetActive(false);
             }
-            mFatigue += mFatigueIncreaseRate * Time.deltaTime;
-            if (mFatigue >= mMaxFatigue)
+            if(photonView.IsMine)
             {
-                mFatigue = mMaxFatigue;
+                mFatigue += mFatigueIncreaseRate * Time.deltaTime;
+                if (mFatigue >= mMaxFatigue)
+                {
+                    mFatigue = mMaxFatigue;
+                }
             }
         }
         else if(!mSelectedSprite.activeInHierarchy)
@@ -53,18 +57,49 @@ public class Raft : MonoBehaviour/*Pun,IPunObservable*/
         }
     }
 
-    //public void OnPhotonSerializeView(PhotonStream pStream, PhotonMessageInfo pInfo)
-    //{
-    //    pStream.Serialize(ref mSelected);
-    //    pStream.Serialize(ref mHealth);
-    //    pStream.Serialize(ref mFatigue);
-    //}
+    public void OnPhotonSerializeView(PhotonStream pStream, PhotonMessageInfo pInfo)
+    {
+        pStream.Serialize(ref mHealth);
+        pStream.Serialize(ref mFatigue);
+        if(pStream.IsReading)
+        {
+            if(mPreviousHealth > mHealth)
+            {
+                EffectsManager.Instance.DamageEffect();
+            }
+            mPreviousHealth = mHealth;
+        }
+    }
 
     void FixedUpdate()
     {
-        //if(photonView.IsMine)
-        //{
-        mRigidbody.gravityScale = mGravityScaleMultiplier * (mSelected ? mSelectedGravityScale : mUnSelectedGravityScale);
-        //}
+        if (photonView.IsMine)
+        {
+            mRigidbody.gravityScale = mGravityScaleMultiplier * (mSelected ? mSelectedGravityScale : mUnSelectedGravityScale);
+        }
     }
+
+    [PunRPC]
+    public void ApplyRelativeForce(Vector2 pForce, PhotonMessageInfo pInfo)
+    {
+        if (pForce.sqrMagnitude > 0.0f)
+        {
+            mFatigue -= mFatigueDecreaseRate * Time.deltaTime;
+            if (mFatigue <= 0.0f)
+            {
+                mFatigue = 0;
+                return;
+            }
+        }
+        else
+        {
+            mFatigue += mFatigueIncreaseRate * Time.deltaTime;
+            if (mFatigue >= mMaxFatigue)
+            {
+                mFatigue = mMaxFatigue;
+            }
+        }
+        mRigidbody.AddRelativeForce(pForce, ForceMode2D.Impulse);
+    }
+
 }

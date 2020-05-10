@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,10 @@ public class FollowPoint : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         Raft aRaft = collision.gameObject.GetComponent<Raft>();
         if(aRaft != null)
         {

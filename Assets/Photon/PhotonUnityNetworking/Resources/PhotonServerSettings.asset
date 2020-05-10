@@ -18,14 +18,14 @@ MonoBehaviour:
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
-    FixedRegion: 
+    FixedRegion: cae
     Server: 
     Port: 0
     Protocol: 0
     AuthMode: 0
-    EnableLobbyStatistics: 0
+    EnableLobbyStatistics: 1
     NetworkLogging: 1
-  DevRegion: 
+  DevRegion: cae
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -33,6 +33,9 @@ MonoBehaviour:
   RpcList:
   - ClickRpc
   - DestroyRpc
+  - ApplyRelativeForce
+  - AddChainRPC
+  - RemoveChainRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
-  DevRegionSetOnce: 0
+  DevRegionSetOnce: 1

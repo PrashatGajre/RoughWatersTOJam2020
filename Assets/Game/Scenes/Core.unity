@@ -210,8 +210,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mNetworkCallbacks: {fileID: 160530157}
+  mSceneLoadingMenu: {fileID: 11400000, guid: 4b507e6e1a6e1764fa9d6ca58e582a96, type: 2}
   mStartMenu: {fileID: 11400000, guid: 2f143ba69c9640948afcebc5eaea560e, type: 2}
   mRoomMenu: {fileID: 11400000, guid: be90231f80264d34e9922678d439088c, type: 2}
+  mGameOverMenu: {fileID: 11400000, guid: 8741890afa7b29442adb5dc41aef5758, type: 2}
+  mGameScene:
+    sceneAsset: {fileID: 102900000, guid: 56034b915c83d2a4b98ad528565a5fab, type: 3}
+    scenePath: Assets/Game/Scenes/Level1.unity
+    sceneName: Level1
 --- !u!114 &160530157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +230,97 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6bff9355b349ae49bafecb21bebf6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &244053494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 244053495}
+  - component: {fileID: 244053496}
+  m_Layer: 0
+  m_Name: EffectsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &244053495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244053494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1356532785}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &244053496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244053494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f5cf0d20de26004aa187d195897a057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mGameHUD: {fileID: 0}
+  mScoreScaleUp: {x: 2, y: 2, z: 2}
+  mScoreMultiplierScaleUp: {x: 2, y: 2, z: 2}
+  mScaleUpEffectTime: 0.3
+  mScaleUpEffectDelay: 0.2
+  mScaleDownEffectTime: 0.3
+  mScaleDownEffectDelay: 0.2
+  mImageDefaultAlpha: 0
+  mItemEffects:
+  - mEffectRepeatCount: 1
+    mEffectUpTime: 0.1
+    mEffectUpDelay: 0.1
+    mEffectDownTime: 0.1
+    mEffectDownDelay: 0.1
+    mEffectColor: {r: 0.09675462, g: 0.6320754, b: 0.07453719, a: 1}
+    mCurrentCounter: 0
+  - mEffectRepeatCount: 1
+    mEffectUpTime: 0.1
+    mEffectUpDelay: 0.1
+    mEffectDownTime: 0.1
+    mEffectDownDelay: 0.1
+    mEffectColor: {r: 0.050980397, g: 0.58431375, b: 0.8941177, a: 1}
+    mCurrentCounter: 0
+  - mEffectRepeatCount: 1
+    mEffectUpTime: 0.1
+    mEffectUpDelay: 0.1
+    mEffectDownTime: 0.1
+    mEffectDownDelay: 0.1
+    mEffectColor: {r: 0.62352943, g: 0.627451, b: 0.5882353, a: 1}
+    mCurrentCounter: 0
+  - mEffectRepeatCount: 3
+    mEffectUpTime: 0.1
+    mEffectUpDelay: 0.1
+    mEffectDownTime: 0.1
+    mEffectDownDelay: 0.1
+    mEffectColor: {r: 0.96470594, g: 0.8196079, b: 0, a: 1}
+    mCurrentCounter: 0
+  mDamageEffect:
+    mEffectRepeatCount: 3
+    mEffectUpTime: 0.1
+    mEffectUpDelay: 0.1
+    mEffectDownTime: 0.1
+    mEffectDownDelay: 0.1
+    mEffectColor: {r: 0.7686275, g: 0.050980397, b: 0.050980397, a: 1}
+    mCurrentCounter: 0
+  mDamageShakeTime: 0.5
+  mAmplitudeGain: 2
+  mFrequencyGain: 8
 --- !u!1 &285287922
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,6 +829,7 @@ Transform:
   - {fileID: 26761833}
   - {fileID: 285287923}
   - {fileID: 160530155}
+  - {fileID: 244053495}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

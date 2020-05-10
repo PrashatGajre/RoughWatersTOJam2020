@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,8 +20,6 @@ public class SteeringAgent : MonoBehaviour
     [HideInInspector] public Vector3 mVelocity = Vector3.zero;
     List<SteeringBehaviourBase> mSteeringBehaviours = new List<SteeringBehaviourBase>();
 
-    private Animator mAnimator;
-
     void Start()
     {
         mSteeringBehaviours.AddRange(GetComponentsInChildren<SteeringBehaviourBase>());
@@ -28,11 +27,15 @@ public class SteeringAgent : MonoBehaviour
         {
             aBehaviour.mSteeringAgent = this;
         }
-        mAnimator = GetComponent<Animator>();
     }
 
     void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+
         Vector3 aSteeringForce = CalculateSteeringForce();
         aSteeringForce.z = 0.0f;
 

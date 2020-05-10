@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +22,10 @@ public class LogObstacle : Obstacle
 
     protected override void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         base.Update();
         transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + mRotationSpeed * Time.deltaTime);
         transform.position += mDirectionInverser * mLogMoveDirection * mFloatingSpeed * Time.deltaTime;
