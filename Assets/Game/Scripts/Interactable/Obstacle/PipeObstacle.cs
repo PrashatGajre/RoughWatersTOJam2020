@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,10 @@ public class PipeObstacle : Obstacle
     float mLastParticleCollision = 0.0f;
     void OnParticleCollision(GameObject pOther)
     {
+        if(!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         if (mCollidedTime > 0.0f)
         {
             return;
@@ -32,6 +37,10 @@ public class PipeObstacle : Obstacle
 
     void LateUpdate()
     {
+        if(!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         if(!mImmuneCollision)
         {
             return;

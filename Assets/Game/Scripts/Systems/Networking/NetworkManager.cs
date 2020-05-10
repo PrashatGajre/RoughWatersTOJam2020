@@ -113,6 +113,10 @@ public class NetworkManager : Singleton<NetworkManager>
         if (!customProperties.ContainsKey("selectedRafts"))
         {
             customProperties.Add("selectedRafts", new bool[] { false, false, false });
+            Score aScore = new Score();
+            aScore.mScore = 0.0f;
+            aScore.mScoreMultiplier = 1.0f;
+            customProperties.Add("scoreStruct", GenHelpers.SerializeData(aScore));
             PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
         }
         foreach (Player player in PhotonNetwork.PlayerList)

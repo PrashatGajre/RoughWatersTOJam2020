@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +9,11 @@ public class BarrierObstacle : Obstacle
     bool mActive = true;
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!mActive)
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+        if (!mActive)
         {
             return;
         }

@@ -44,6 +44,11 @@ public class DataHandler : Singleton<DataHandler>
         if(mCurrentMaxDistance < aDistance)
         {
             mScore.mScore += mScore.mScoreMultiplier * mLevelTraversalScore * (aDistance - mCurrentMaxDistance);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(
+                new ExitGames.Client.Photon.Hashtable()
+                {
+                    { "scoreStruct", GenHelpers.SerializeData(mScore)}
+                });
             mCurrentMaxDistance = aDistance;
         }
     }
@@ -58,6 +63,11 @@ public class DataHandler : Singleton<DataHandler>
             {
                 mActiveRafts[i].mSelected = selectedRafts[i];
             }
+        }
+        if(propertiesThatChanged.ContainsKey("scoreStruct"))
+        {
+            object scoreStruct = propertiesThatChanged["scoreStruct"];
+            GenHelpers.DeSerializeData((byte[])scoreStruct, ref mScore);
         }
     }
 

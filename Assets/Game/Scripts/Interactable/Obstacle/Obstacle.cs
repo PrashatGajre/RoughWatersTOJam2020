@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +20,11 @@ public class Obstacle : MonoBehaviour
 
     protected virtual void Update()
     {
-        if(mCollidedTime > 0.0f)
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+        if (mCollidedTime > 0.0f)
         {
             mCollidedTime -= Time.deltaTime;
         }
@@ -27,7 +32,11 @@ public class Obstacle : MonoBehaviour
 
     protected virtual void OnCollisionEnter2D(Collision2D pCollision)
     {
-        if(mCollidedTime > 0.0f)
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+        if (mCollidedTime > 0.0f)
         {
             return;
         }
