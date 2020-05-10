@@ -17,6 +17,17 @@ public class RaftStats : MonoBehaviour
         mRaftImage.color = mRaftColor;
     }
 
+    private void OnEnable()
+    {
+        for (int aI = 0; aI < DataHandler.Instance.mActiveRafts.Length; aI++)
+        {
+            if (DataHandler.Instance.mActiveRafts[aI].mRaftIndex == mRaftType)
+            {
+                mReferenceRaft = DataHandler.Instance.mActiveRafts[aI];
+            }
+        }
+    }
+
     void Update()
     {
         mHealthBar.fillAmount = mReferenceRaft.mHealth / mReferenceRaft.mMaxHealth;
