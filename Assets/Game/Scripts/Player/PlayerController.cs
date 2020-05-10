@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviourPun, IPunObservable
 {
-    [SerializeField] float mChangeRaftThreshold = 0.95f;
-    [SerializeField] float mDelayBetweenShifting = 0.5f;
     [SerializeField] float mReverseNegateMultiplier = 0.35f;
     Vector2 mMoveVector;
-    float mChangeDelta;
-    [Tooltip("Temporary Assignment")]
-    public Raft mCurrentRaft;
-    float mCurrentShiftDelay = -1.0f;
+    [HideInInspector] public Raft mCurrentRaft;
 
     private void Start()
     {
@@ -32,83 +28,6 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
                     actionEvent.AddListener(OnChangeRaft);
                 }
             }
-        }
-    }
-
-    void Update()
-    {
-        if (mCurrentRaft == null)
-        {
-            return;
-        }
-        if (mCurrentShiftDelay < 0.0f)
-        {
-            return;
-        }
-        mCurrentShiftDelay -= Time.deltaTime;
-        if(mCurrentShiftDelay <= 0.0f)
-        {
-            mCurrentShiftDelay = -1.0f;
-            Raft aRaft = null;
-            if (mChangeDelta <= -mChangeRaftThreshold && mCurrentRaft.mRaftIndex != 0)
-            {
-                aRaft = DataHandler.Instance.mActiveRafts[(int)mCurrentRaft.mRaftIndex - 1];
-                if (aRaft.mSelected)
-                {
-                    while (aRaft.mRaftIndex != 0)
-                    {
-                        aRaft = DataHandler.Instance.mActiveRafts[(int)aRaft.mRaftIndex - 1];
-                        if (!aRaft.mSelected)
-                        {
-                            break;
-                        }
-                    }
-                    if (aRaft.mSelected)
-                    {
-                        return;
-                    }
-                }
-                
-            }
-            else if (mChangeDelta >= mChangeRaftThreshold &&
-                (int)mCurrentRaft.mRaftIndex != (DataHandler.Instance.mActiveRafts.Length - 1))
-            {
-                aRaft = DataHandler.Instance.mActiveRafts[(int)mCurrentRaft.mRaftIndex + 1];
-                if (aRaft.mSelected)
-                {
-                    while ((int)aRaft.mRaftIndex != (DataHandler.Instance.mActiveRafts.Length - 1))
-                    {
-                        aRaft = DataHandler.Instance.mActiveRafts[(int)aRaft.mRaftIndex + 1];
-                        if (!aRaft.mSelected)
-                        {
-                            break;
-                        }
-                    }
-                    if (aRaft.mSelected)
-                    {
-                        return;
-                    }
-                }
-                
-            }
-            if(aRaft == null)
-            {
-                return;
-            }
-            mCurrentRaft.mSelected = false;
-            aRaft.mSelected = true;
-
-            ExitGames.Client.Photon.Hashtable customProperties = Photon.Pun.PhotonNetwork.CurrentRoom.CustomProperties;
-            bool[] selectedRafts = (bool[])customProperties["selectedRafts"];
-
-            selectedRafts[(int)mCurrentRaft.mRaftIndex] = false;
-            selectedRafts[(int)aRaft.mRaftIndex] = true;
-
-            customProperties["selectedRafts"] = selectedRafts;
-            Photon.Pun.PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
-
-            mCurrentRaft = aRaft;
-            mCurrentShiftDelay = mDelayBetweenShifting;
         }
     }
 
@@ -136,21 +55,37 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (DataHandler.Instance.mGameStarted)
         {
-            mChangeDelta = (float)pCallbackContext.ReadValueAsObject();
-            if ((mChangeDelta <= -mChangeRaftThreshold && mCurrentRaft.mRaftIndex != 0)
-                || (mChangeDelta >= mChangeRaftThreshold &&
-                (int)mCurrentRaft.mRaftIndex != (DataHandler.Instance.mActiveRafts.Length - 1)))
+            if(pCallbackContext.ReadValueAsButton())
             {
-                if (mCurrentShiftDelay == -1)
+                int aIx = (int)mCurrentRaft.mRaftIndex;
+                aIx = (aIx + 1) % DataHandler.Instance.mActiveRafts.Length;
+                while (aIx != (int) mCurrentRaft.mRaftIndex)
                 {
-                    mCurrentShiftDelay = 0.0f;
+                    if(DataHandler.Instance.mActiveRafts[aIx].mSelected)
+                    {
+                        aIx = (aIx + 1) % DataHandler.Instance.mActiveRafts.Length;
+                    }
+                    else
+                    {
+                        Raft aRaft = DataHandler.Instance.mActiveRafts[aIx];
+                        mCurrentRaft.mSelected = false;
+                        aRaft.mSelected = true;
+                        ExitGames.Client.Photon.Hashtable customProperties = PhotonNetwork.CurrentRoom.CustomProperties;
+                        bool[] selectedRafts = (bool[])customProperties["selectedRafts"];
+                        selectedRafts[(int)mCurrentRaft.mRaftIndex] = false;
+                        selectedRafts[(int)aRaft.mRaftIndex] = true;
+                        customProperties["selectedRafts"] = selectedRafts;
+                        PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
+                        mCurrentRaft = aRaft;
+                    }
                 }
+
             }
         }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        //throw new System.NotImplementedException();
+        
     }
 }

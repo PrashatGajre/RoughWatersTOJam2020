@@ -15,9 +15,9 @@
                 },
                 {
                     "name": "ChangeRaft",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "9ae83edf-ae21-414f-91a3-e4184b7414a1",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
@@ -164,70 +164,15 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "GamePad",
-                    "id": "903c946a-11b4-4946-b598-96e7aaba4415",
-                    "path": "1DAxis",
+                    "name": "",
+                    "id": "f4e8ab2d-872f-42e6-8754-b41ec52e92a6",
+                    "path": "*/{primaryAction}",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse;Gamepad",
                     "action": "ChangeRaft",
-                    "isComposite": true,
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "50d920b5-896d-4e0b-b423-f36511bcde8d",
-                    "path": "<Gamepad>/rightStick/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "ChangeRaft",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "e377c3bd-dee3-47a0-955c-90b02056dfcc",
-                    "path": "<Gamepad>/rightStick/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "ChangeRaft",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Keyboard",
-                    "id": "b60d092e-dce5-432e-a7ca-ac431f19faed",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ChangeRaft",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "de74094e-f695-40f3-b872-bab7c754de92",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "ChangeRaft",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "7adbb104-717a-4b39-9ded-2023f078a400",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "ChangeRaft",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         },
