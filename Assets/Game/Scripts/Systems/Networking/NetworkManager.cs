@@ -195,7 +195,7 @@ public class NetworkManager : Singleton<NetworkManager>
             MenuManager.Instance.ShowMenu(mGameOverMenu);
             GameOverMenu gameover = GameObject.FindObjectOfType<GameOverMenu>();
 
-            gameover.ShowGameOver(message, DataHandler.Instance.mScore.ToString());
+            gameover.ShowGameOver(message, ((int)DataHandler.Instance.mScore.mScore).ToString());
         }
         if (eventCode == NetworkManager.EVNT_GAMEWON)
         {
@@ -205,7 +205,7 @@ public class NetworkManager : Singleton<NetworkManager>
             MenuManager.Instance.ShowMenu(mGameOverMenu);
             GameOverMenu gameover = GameObject.FindObjectOfType<GameOverMenu>();
 
-            gameover.ShowGameOver(message, DataHandler.Instance.mScore.ToString());
+            gameover.ShowGameOver(message, ((int)DataHandler.Instance.mScore.mScore).ToString());
         }
         if (eventCode == NetworkManager.EVNT_GAMEOVER)
         {
