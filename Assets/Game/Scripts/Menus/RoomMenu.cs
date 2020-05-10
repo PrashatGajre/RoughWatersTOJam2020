@@ -9,6 +9,14 @@ public class RoomMenu : Menu
 
     [SerializeField] MenuClassifier mSceneLoadingMenu;
 
+    [SerializeField] Button mStartSinglePlayerButton;
+
+    protected override void OnVisible()
+    {
+        mStartSinglePlayerButton.Select();
+        base.OnVisible();
+    }
+
     private void OnEnable()
     {
         if (NetworkManager.Instance.IsConnected())

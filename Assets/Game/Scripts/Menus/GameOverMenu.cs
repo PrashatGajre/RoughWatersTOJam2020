@@ -7,6 +7,13 @@ public class GameOverMenu : Menu
 {
     [SerializeField] Text mGameOverTitleText;
     [SerializeField] Text mScoreText;
+    [SerializeField] Button mReturnToMainButton;
+
+    protected override void OnVisible()
+    {
+        mReturnToMainButton.Select();
+        base.OnVisible();
+    }
 
     public void ShowGameOver(string message, string score)
     {
@@ -16,9 +23,10 @@ public class GameOverMenu : Menu
 
     public void LeaveRoom()
     {
-        object[] content = new object[] { "Leave Room" };
-        NetworkManager.Instance.RaiseEvent(NetworkManager.EVNT_GAMEOVER, content,
-            new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.All },
-            new ExitGames.Client.Photon.SendOptions { Reliability = true });
+        MenuManager.Instance.ShowLoad();
+        MenuManager.Instance.HideMenu(mMenuClassifier);
+
+        Photon.Pun.PhotonNetwork.LeaveRoom();
+
     }
 }
