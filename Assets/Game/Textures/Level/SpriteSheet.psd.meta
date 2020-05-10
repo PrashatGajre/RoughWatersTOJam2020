@@ -80,6 +80,15 @@ TextureImporter:
   - first:
       213: 4050273695720440628
     second: Bar_Tiles
+  - first:
+      213: -8516189750247450741
+    second: Health
+  - first:
+      213: -4768450242260759221
+    second: Fatigue
+  - first:
+      213: -5521112282276127969
+    second: Selected
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -475,6 +484,69 @@ TextureImporter:
       bones: []
       spriteID: 433868c8776753830800000000000000
       internalID: 4050273695720440628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Health
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 21
+        width: 68
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b879da8fa8a60d980800000000000000
+      internalID: -8516189750247450741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fatigue
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 99
+        width: 57
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4d0cecd4cf03ddb0800000000000000
+      internalID: -4768450242260759221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Selected
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 23
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1b92e1a1a11163b0800000000000000
+      internalID: -5521112282276127969
       vertices: []
       indices: 
       edges: []
