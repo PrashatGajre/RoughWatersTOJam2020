@@ -25,11 +25,12 @@ public class Raft : MonoBehaviourPun, IPunObservable
     [HideInInspector] public float mGravityScaleMultiplier = 1.0f;
     [SerializeField] float mSelectedGravityScale = 0.65f;
     [SerializeField] float mUnSelectedGravityScale = 1.0f;
-
+    float mPreviousHealth = 0;
     protected virtual void Start()
     {
         mHealth = mMaxHealth;
         mFatigue = mMaxFatigue;
+        mPreviousHealth = mHealth;
     }
 
 
@@ -60,6 +61,14 @@ public class Raft : MonoBehaviourPun, IPunObservable
     {
         pStream.Serialize(ref mHealth);
         pStream.Serialize(ref mFatigue);
+        if(pStream.IsReading)
+        {
+            if(mPreviousHealth > mHealth)
+            {
+                EffectsManager.Instance.DamageEffect();
+            }
+            mPreviousHealth = mHealth;
+        }
     }
 
     void FixedUpdate()
