@@ -26,8 +26,8 @@ public class ChainRaft : Raft
     protected override void Start()
     {
         base.Start();
-        ConnectionSetup(mRightChainJoint, mRightRaft, -1);
-        ConnectionSetup(mLeftChainJoint, mLeftRaft, 1);
+        ConnectionSetup(mRightChainJoint, mRightRaft);
+        ConnectionSetup(mLeftChainJoint, mLeftRaft);
         mCurrentChainLength++;
         for(int aI = 1; aI < mGameStartChainLength; aI ++)
         {
@@ -61,8 +61,8 @@ public class ChainRaft : Raft
             return;
         }
         mCurrentChainLength++;
-        ConnectionSetup(mRightEndChain, mRightRaft, -1, true);
-        ConnectionSetup(mLeftEndChain, mLeftRaft, 1, true);
+        ConnectionSetup(mRightEndChain, mRightRaft, true);
+        ConnectionSetup(mLeftEndChain, mLeftRaft, true);
 
     }
     void RemoveChainConnection()
@@ -73,15 +73,16 @@ public class ChainRaft : Raft
             return;
         }
         mCurrentChainLength--;
-        RemoveConnectionSetup(mLeftEndChain, mLeftRaft, -1);
-        RemoveConnectionSetup(mRightEndChain, mRightRaft, 1);
+        RemoveConnectionSetup(mLeftEndChain, mLeftRaft);
+        RemoveConnectionSetup(mRightEndChain, mRightRaft);
     }
 
-    void ConnectionSetup(Chain pMainChainJoint, Raft pMovingRaft, float pYOffset, bool pEnd = false)
+    void ConnectionSetup(Chain pMainChainJoint, Raft pMovingRaft, bool pEnd = false)
     {
         GameObject aChainObject = Instantiate(mChainObject, mChainParent, false);
         Chain aChain = aChainObject.GetComponent<Chain>();
         Chain aCurrentConnectedChain = pMainChainJoint.mHingeJoint.connectedBody.gameObject.GetComponent<Chain>();
+        Vector3 aAdditionOffset = Vector3.zero;
         if(pEnd)
         {
             aCurrentConnectedChain.mConnectedTo = aChain;
@@ -91,9 +92,12 @@ public class ChainRaft : Raft
             aCurrentConnectedChain.mHingeJoint.connectedBody = aChain.mRigidbody;
             aChain.mHingeJoint.connectedBody = pMainChainJoint.mRigidbody;
             pMainChainJoint.mHingeJoint.connectedBody = aChain.mRigidbody;
-            aChainObject.transform.position = pMainChainJoint.transform.position;
-            aChainObject.transform.rotation = pMainChainJoint.transform.rotation;
-            pMainChainJoint.transform.position += pYOffset * Vector3.up * aChain.mChainCollider.size.y;
+            aChainObject.transform.position = aCurrentConnectedChain.transform.position;
+            aChainObject.transform.rotation = aCurrentConnectedChain.transform.rotation;
+            aAdditionOffset = (pMainChainJoint.transform.position - aCurrentConnectedChain.transform.position).normalized
+                * aChain.mChainCollider.size.y;
+            aChainObject.transform.position += aAdditionOffset;
+            pMainChainJoint.transform.position += aAdditionOffset;
         }
         else
         {
@@ -108,12 +112,15 @@ public class ChainRaft : Raft
             pMainChainJoint.mHingeJoint.connectedBody = aChain.mRigidbody;
             aChainObject.transform.position = aCurrentConnectedChain.transform.position;
             aChainObject.transform.rotation = aCurrentConnectedChain.transform.rotation;
-            aCurrentConnectedChain.transform.position += pYOffset * Vector3.up * aChain.mChainCollider.size.y;
+            aAdditionOffset = (aCurrentConnectedChain.transform.position - pMainChainJoint.transform.position).normalized
+                * aChain.mChainCollider.size.y;
+            aCurrentConnectedChain.transform.position += aAdditionOffset;
+                
         }
-        pMovingRaft.transform.position += pYOffset * Vector3.up * aChain.mChainCollider.size.y;
+        pMovingRaft.transform.position += aAdditionOffset;
     }
 
-    void RemoveConnectionSetup(Chain pMainChainJoint, Raft pMovingRaft, float pYOffset)
+    void RemoveConnectionSetup(Chain pMainChainJoint, Raft pMovingRaft)
     {
         Chain aChain = pMainChainJoint.mHingeJoint.connectedBody.gameObject.GetComponent<Chain>();
         Chain aConnectedFrom = aChain.mConnectedFrom;
@@ -121,8 +128,9 @@ public class ChainRaft : Raft
         aConnectedFrom.mConnectedTo = pMainChainJoint;
         aConnectedFrom.mHingeJoint.connectedBody = pMainChainJoint.mRigidbody;
         pMainChainJoint.mHingeJoint.connectedBody = aConnectedFrom.mRigidbody;
-        pMainChainJoint.transform.position += pYOffset * Vector3.up * aChain.mChainCollider.size.y;
-        pMovingRaft.transform.position += pYOffset * Vector3.up * aChain.mChainCollider.size.y;
+        Vector3 aAdditionOffset = (aConnectedFrom.transform.position - pMainChainJoint.transform.position).normalized * aChain.mChainCollider.size.y;
+        pMainChainJoint.transform.position += aAdditionOffset;
+        pMovingRaft.transform.position += aAdditionOffset;
         Destroy(aChain.gameObject);
     }
 
