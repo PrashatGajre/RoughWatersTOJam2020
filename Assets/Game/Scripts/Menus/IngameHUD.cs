@@ -7,7 +7,11 @@ public class IngameHUD : Menu
 {
     public Text mScoreText;
     public Text mScoreMultiplierText;
-
+    public override void Start()
+    {
+        EffectsManager.Instance.SetInGameHUD(this);
+        base.Start();
+    }
     private void Update()
     {
         mScoreText.text = ((int)DataHandler.Instance.mScore.mScore).ToString();

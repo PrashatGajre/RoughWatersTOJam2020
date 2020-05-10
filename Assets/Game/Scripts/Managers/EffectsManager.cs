@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class EffectsManager : Singleton<EffectsManager>
 {
-    IngameHUD mGameHUD = null;
-    [SerializeField] MenuClassifier mInGameHUD;
+    [HideInInspector]public IngameHUD mGameHUD = null;
     [SerializeField] Vector3 mScoreScaleUp = new Vector3(3,3,3);
     [SerializeField] Vector3 mScoreMultiplierScaleUp = new Vector3(3,3,3);
     Vector3 mDefaultScoreScale = Vector3.one;
@@ -14,9 +13,9 @@ public class EffectsManager : Singleton<EffectsManager>
     [SerializeField] float mScaleUpEffectDelay = 0.2f;
     [SerializeField] float mScaleDownEffectTime = 0.3f;
     [SerializeField] float mScaleDownEffectDelay = 0.2f;
-    void Start()
+    public void SetInGameHUD(IngameHUD pHUD)
     {
-        mGameHUD = MenuManager.Instance.GetMenu<IngameHUD>(mInGameHUD);
+        mGameHUD = pHUD;
         mDefaultScoreScale = mGameHUD.mScoreText.rectTransform.localScale;
         mDefaultScoreMultiplierScale = mGameHUD.mScoreMultiplierText.rectTransform.localScale;
     }
