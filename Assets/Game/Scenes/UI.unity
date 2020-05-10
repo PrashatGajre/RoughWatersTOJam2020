@@ -948,7 +948,7 @@ MonoBehaviour:
   mFatigueBar: {fileID: 1921263944}
   mRaftImage: {fileID: 176419301}
   mRaftType: 2
-  mRaftColor: {r: 0.92381275, g: 0.9339623, b: 0.33922213, a: 1}
+  mRaftColor: {r: 1, g: 0.8, b: 0.33333334, a: 1}
   mReferenceRaft: {fileID: 0}
 --- !u!114 &469067283
 MonoBehaviour:
@@ -1522,7 +1522,7 @@ MonoBehaviour:
   mFatigueBar: {fileID: 1205918493}
   mRaftImage: {fileID: 57858938}
   mRaftType: 0
-  mRaftColor: {r: 0.600709, g: 0, b: 0.754717, a: 1}
+  mRaftColor: {r: 0.81960785, g: 0.4, b: 1, a: 1}
   mReferenceRaft: {fileID: 0}
 --- !u!1 &776107762
 GameObject:
@@ -1688,7 +1688,7 @@ MonoBehaviour:
   mFatigueBar: {fileID: 2086351266}
   mRaftImage: {fileID: 1099501834}
   mRaftType: 1
-  mRaftColor: {r: 0.9716981, g: 0, b: 0.06860794, a: 1}
+  mRaftColor: {r: 1, g: 0.3137255, b: 0.20392157, a: 1}
   mReferenceRaft: {fileID: 0}
 --- !u!114 &789131097
 MonoBehaviour:
@@ -2757,7 +2757,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 21
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
