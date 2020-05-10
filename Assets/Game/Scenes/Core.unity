@@ -269,6 +269,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mInGameHUD: {fileID: 11400000, guid: 77703f461d87a534cb57fb6629385bf5, type: 2}
+  mScoreScaleUp: {x: 2, y: 2, z: 2}
+  mScoreMultiplierScaleUp: {x: 2, y: 2, z: 2}
+  mScaleUpEffectTime: 0.3
+  mScaleUpEffectDelay: 0.2
+  mScaleDownEffectTime: 0.3
+  mScaleDownEffectDelay: 0.2
 --- !u!1 &285287922
 GameObject:
   m_ObjectHideFlags: 0
