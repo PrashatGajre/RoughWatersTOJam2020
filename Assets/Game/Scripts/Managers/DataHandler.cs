@@ -9,11 +9,12 @@ public class DataHandler : Singleton<DataHandler>
     public Transform mRaftTargetGroup;
     [SerializeField] float mLevelTraversalScore = 10.0f;
     [HideInInspector] public Score mScore;
+    int mLastUpdatedScore = 0;
+    int mLastUpdatedMultiplier = 1;
     float mCurrentMaxDistance = 0.0f;
     Vector3 mStartPosition = Vector3.zero;
 
     public bool mGameStarted = false;
-
     private void OnEnable()
     {
         NetworkManager.Instance.mNetworkCallbacks.OnRoomPropertiesUpdateDelegate += Propertiesupdated;
@@ -22,7 +23,6 @@ public class DataHandler : Singleton<DataHandler>
     private void OnDisable()
     {
         NetworkManager.Instance.mNetworkCallbacks.OnRoomPropertiesUpdateDelegate -= Propertiesupdated;
-        
     }
 
     void Start()
@@ -68,6 +68,18 @@ public class DataHandler : Singleton<DataHandler>
         {
             object scoreStruct = propertiesThatChanged["scoreStruct"];
             GenHelpers.DeSerializeData((byte[])scoreStruct, ref mScore);
+            int aCurScore = (int)mScore.mScore;
+            int aCurMulti = (int)mScore.mScoreMultiplier;
+            if(aCurMulti != mLastUpdatedMultiplier)
+            {
+                mLastUpdatedMultiplier = aCurMulti;
+                EffectsManager.Instance.ScoreMultiplierAddedEffect();
+            }
+            if(aCurScore != mLastUpdatedScore)
+            {
+                mLastUpdatedScore = aCurScore;
+                EffectsManager.Instance.ScoreAddedEffect();
+            }
         }
     }
 

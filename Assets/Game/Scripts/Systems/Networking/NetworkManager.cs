@@ -55,6 +55,11 @@ public class NetworkManager : Singleton<NetworkManager>
         Photon.Pun.PhotonNetwork.NetworkingClient.EventReceived -= OnPhotonEvents;
     }
 
+    void Awake()
+    {
+        LeanTween.init(1000);
+    }
+
     private void Start()
     {
         if (mNetworkCallbacks == null)
