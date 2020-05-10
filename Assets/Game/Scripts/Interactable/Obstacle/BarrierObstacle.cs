@@ -13,6 +13,10 @@ public class BarrierObstacle : Obstacle
             return;
         }
         Raft aRaft = collision.GetComponent<Raft>();
+        if(aRaft == null)
+        {
+            return;
+        }
         if(aRaft.mRaftIndex == mImmuneRaft)
         {
             mActive = false;

@@ -8,14 +8,10 @@ public class FollowPoint : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(mCrocodileObstacle.mState == CrocodileObstacle.State.Follow)
-        {
-            return;
-        }
         Raft aRaft = collision.gameObject.GetComponent<Raft>();
         if(aRaft != null)
         {
-            mCrocodileObstacle.mState = CrocodileObstacle.State.Follow;
+            mCrocodileObstacle.SetFollowMode();
         }
     }
 

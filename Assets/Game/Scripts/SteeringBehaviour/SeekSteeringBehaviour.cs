@@ -10,4 +10,9 @@ public class SeekSteeringBehaviour : SteeringBehaviourBase
 		aDesiredVelocity = aDesiredVelocity * mSteeringAgent.mMaxSpeed;
 		return aDesiredVelocity - mSteeringAgent.mVelocity;
 	}
+
+	void OnDrawGizmos()
+	{
+		DebugExtension.DebugArrow(transform.position, (mTarget - transform.position).normalized,Color.red);
+	}
 }

@@ -13,9 +13,10 @@ public class CrocodileObstacle : Obstacle
     [SerializeField] float mFollowTime = 1.0f;
     [SerializeField] Transform mWaypointParent;
     [SerializeField] ArriveSteeringBehaviour mArriveBehaviour;
+    [SerializeField] float mFollowSpeedMultiplier = 5.0f;
     List<Transform> mWaypoints;
     int mCurrentWaypointIndex = 0;
-    [HideInInspector] public State mState = State.Patrol;
+    State mState = State.Patrol;
     float mBackToPatrolTimer = 0.0f;
     void Start()
     {
@@ -63,6 +64,7 @@ public class CrocodileObstacle : Obstacle
         {
             mBackToPatrolTimer = 0.0f;
             mArriveBehaviour.CalculateNewPath(mWaypoints[mCurrentWaypointIndex].position);
+            mArriveBehaviour.mSteeringAgent.mMaxSpeed /= mFollowSpeedMultiplier;
             mState = State.Patrol;
             return;
         }
@@ -87,6 +89,17 @@ public class CrocodileObstacle : Obstacle
         {
             DebugExtension.DrawPoint(mWaypointParent.GetChild(aI).position,Color.yellow);
         }
+    }
+
+    public void SetFollowMode()
+    {
+        if(mState == State.Follow)
+        {
+            mBackToPatrolTimer = 0.0f;
+            return;
+        }
+        mState = State.Follow;
+        mArriveBehaviour.mSteeringAgent.mMaxSpeed *= mFollowSpeedMultiplier;
     }
 
 

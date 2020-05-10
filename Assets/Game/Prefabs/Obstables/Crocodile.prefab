@@ -80,7 +80,7 @@ MonoBehaviour:
   mFollowTime: 1
   mWaypointParent: {fileID: 2014272372802274097}
   mArriveBehaviour: {fileID: 1809145249830489806}
-  mState: 0
+  mFollowSpeedMultiplier: 5
 --- !u!114 &5214057056657754421
 MonoBehaviour:
   m_ObjectHideFlags: 0
