@@ -11,6 +11,9 @@ public class DataHandler : Singleton<DataHandler>
     [HideInInspector] public float mScoreMultiplier = 1.0f;
     float mCurrentMaxDistance = 0.0f;
     Vector3 mStartPosition = Vector3.zero;
+
+    public bool mGameStarted = false;
+
     void Start()
     {
         for(int aI = 0; aI < mActiveRafts.Length;aI ++)

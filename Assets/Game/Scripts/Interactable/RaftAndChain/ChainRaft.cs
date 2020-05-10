@@ -154,14 +154,17 @@ public class ChainRaft : Raft
 
     public void OnChainLengthChange(InputAction.CallbackContext pCallbackContext)
     {
-        float aChainLengthDelta = (float)pCallbackContext.ReadValueAsObject();
-        if(aChainLengthDelta <= -mTriggerThreshold)
+        if (DataHandler.Instance.mGameStarted)
         {
-            mRemoveChainJoint = true;
-        }
-        else if(aChainLengthDelta >= mTriggerThreshold)
-        {
-            mAddChainJoint = true;
+            float aChainLengthDelta = (float)pCallbackContext.ReadValueAsObject();
+            if (aChainLengthDelta <= -mTriggerThreshold)
+            {
+                mRemoveChainJoint = true;
+            }
+            else if (aChainLengthDelta >= mTriggerThreshold)
+            {
+                mAddChainJoint = true;
+            }
         }
     }
 

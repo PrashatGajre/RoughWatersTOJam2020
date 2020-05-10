@@ -133,19 +133,25 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
     public void OnMoveStick(InputAction.CallbackContext pCallbackContext)
     {
-        mMoveVector = (Vector2) pCallbackContext.ReadValueAsObject();
+        if (DataHandler.Instance.mGameStarted)
+        {
+            mMoveVector = (Vector2)pCallbackContext.ReadValueAsObject();
+        }
     }
 
     public void OnChangeRaft(InputAction.CallbackContext pCallbackContext)
     {
-        mChangeDelta = (float)pCallbackContext.ReadValueAsObject();
-        if ((mChangeDelta <= -mChangeRaftThreshold && mCurrentRaft.mRaftIndex != 0)
-            ||(mChangeDelta >= mChangeRaftThreshold &&
-            (int)mCurrentRaft.mRaftIndex != (DataHandler.Instance.mActiveRafts.Length - 1)))
+        if (DataHandler.Instance.mGameStarted)
         {
-            if (mCurrentShiftDelay == -1)
+            mChangeDelta = (float)pCallbackContext.ReadValueAsObject();
+            if ((mChangeDelta <= -mChangeRaftThreshold && mCurrentRaft.mRaftIndex != 0)
+                || (mChangeDelta >= mChangeRaftThreshold &&
+                (int)mCurrentRaft.mRaftIndex != (DataHandler.Instance.mActiveRafts.Length - 1)))
             {
-                mCurrentShiftDelay = 0.0f;
+                if (mCurrentShiftDelay == -1)
+                {
+                    mCurrentShiftDelay = 0.0f;
+                }
             }
         }
     }
