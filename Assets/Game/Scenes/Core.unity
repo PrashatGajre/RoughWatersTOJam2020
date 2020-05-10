@@ -278,44 +278,44 @@ MonoBehaviour:
   mImageDefaultAlpha: 0
   mItemEffects:
   - mEffectRepeatCount: 1
-    mEffectUpTime: 0.3
-    mEffectUpDelay: 0.2
-    mEffectDownTime: 0.3
-    mEffectDownDelay: 0.2
+    mEffectUpTime: 0.1
+    mEffectUpDelay: 0.1
+    mEffectDownTime: 0.1
+    mEffectDownDelay: 0.1
     mEffectColor: {r: 0.09675462, g: 0.6320754, b: 0.07453719, a: 1}
     mCurrentCounter: 0
   - mEffectRepeatCount: 1
-    mEffectUpTime: 0.3
-    mEffectUpDelay: 0.2
-    mEffectDownTime: 0.3
-    mEffectDownDelay: 0.2
+    mEffectUpTime: 0.1
+    mEffectUpDelay: 0.1
+    mEffectDownTime: 0.1
+    mEffectDownDelay: 0.1
     mEffectColor: {r: 0.050980397, g: 0.58431375, b: 0.8941177, a: 1}
     mCurrentCounter: 0
   - mEffectRepeatCount: 1
-    mEffectUpTime: 0.3
-    mEffectUpDelay: 0.2
-    mEffectDownTime: 0.3
-    mEffectDownDelay: 0.2
+    mEffectUpTime: 0.1
+    mEffectUpDelay: 0.1
+    mEffectDownTime: 0.1
+    mEffectDownDelay: 0.1
     mEffectColor: {r: 0.62352943, g: 0.627451, b: 0.5882353, a: 1}
     mCurrentCounter: 0
   - mEffectRepeatCount: 3
-    mEffectUpTime: 0.3
-    mEffectUpDelay: 0.2
-    mEffectDownTime: 0.3
-    mEffectDownDelay: 0.2
+    mEffectUpTime: 0.1
+    mEffectUpDelay: 0.1
+    mEffectDownTime: 0.1
+    mEffectDownDelay: 0.1
     mEffectColor: {r: 0.96470594, g: 0.8196079, b: 0, a: 1}
     mCurrentCounter: 0
   mDamageEffect:
     mEffectRepeatCount: 3
-    mEffectUpTime: 0.3
-    mEffectUpDelay: 0.2
-    mEffectDownTime: 0.3
-    mEffectDownDelay: 0.2
+    mEffectUpTime: 0.1
+    mEffectUpDelay: 0.1
+    mEffectDownTime: 0.1
+    mEffectDownDelay: 0.1
     mEffectColor: {r: 0.7686275, g: 0.050980397, b: 0.050980397, a: 1}
     mCurrentCounter: 0
   mDamageShakeTime: 0.5
-  mAmplitudeGain: 1.5
-  mFrequencyGain: 6
+  mAmplitudeGain: 2
+  mFrequencyGain: 8
 --- !u!1 &285287922
 GameObject:
   m_ObjectHideFlags: 0
