@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Item : MonoBehaviour
 {
@@ -18,15 +19,20 @@ public class Item : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Raft aRaft = collision.GetComponent<Raft>();
-        if(aRaft != null)
+        if (!PhotonNetwork.IsMasterClient)
         {
-            switch(mType)
+            return;
+        }
+        Raft aRaft = collision.GetComponent<Raft>();
+        if (aRaft != null)
+        {
+            EffectsManager.Instance.ItemCollectedEffect(mType);
+            switch (mType)
             {
                 case Type.Fatigue:
                     {
                         aRaft.mFatigue += mModifierAmount;
-                        if(aRaft.mFatigue > aRaft.mMaxFatigue)
+                        if (aRaft.mFatigue > aRaft.mMaxFatigue)
                         {
                             aRaft.mFatigue = aRaft.mMaxFatigue;
                         }
@@ -35,7 +41,7 @@ public class Item : MonoBehaviour
                 case Type.Health:
                     {
                         aRaft.mHealth += mModifierAmount;
-                        if(aRaft.mHealth > aRaft.mMaxHealth)
+                        if (aRaft.mHealth > aRaft.mMaxHealth)
                         {
                             aRaft.mHealth = aRaft.mMaxHealth;
                         }
@@ -43,16 +49,26 @@ public class Item : MonoBehaviour
                     }
                 case Type.Multiplier:
                     {
-                        DataHandler.Instance.mScoreMultiplier *= mModifierAmount;
+                        DataHandler.Instance.mScore.mScoreMultiplier *= mModifierAmount;
+                        PhotonNetwork.CurrentRoom.SetCustomProperties(
+                        new ExitGames.Client.Photon.Hashtable()
+                        {
+                            { "scoreStruct", GenHelpers.SerializeData(DataHandler.Instance.mScore)}
+                        });
                         break;
                     }
                 case Type.Score:
                     {
-                        DataHandler.Instance.mCurrentScore += DataHandler.Instance.mScoreMultiplier * mModifierAmount;
+                        DataHandler.Instance.mScore.mScore += DataHandler.Instance.mScore.mScoreMultiplier * mModifierAmount;
+                        PhotonNetwork.CurrentRoom.SetCustomProperties(
+                        new ExitGames.Client.Photon.Hashtable()
+                        {
+                            { "scoreStruct", GenHelpers.SerializeData(DataHandler.Instance.mScore)}
+                        });
                         break;
                     }
             }
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 

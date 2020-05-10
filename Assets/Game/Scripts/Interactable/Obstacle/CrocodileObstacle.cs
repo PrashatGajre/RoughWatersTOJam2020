@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using TreeEditor;
 using UnityEngine;
@@ -20,6 +21,10 @@ public class CrocodileObstacle : Obstacle
     float mBackToPatrolTimer = 0.0f;
     void Start()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         mWaypoints = new List<Transform>();
         for(int aI = 0;aI < mWaypointParent.childCount; aI ++)
         {
@@ -32,6 +37,10 @@ public class CrocodileObstacle : Obstacle
 
     protected override void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         base.Update();
         switch(mState)
         {

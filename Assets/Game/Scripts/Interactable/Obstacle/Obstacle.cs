@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +20,11 @@ public class Obstacle : MonoBehaviour
 
     protected virtual void Update()
     {
-        if(mCollidedTime > 0.0f)
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+        if (mCollidedTime > 0.0f)
         {
             mCollidedTime -= Time.deltaTime;
         }
@@ -27,7 +32,11 @@ public class Obstacle : MonoBehaviour
 
     protected virtual void OnCollisionEnter2D(Collision2D pCollision)
     {
-        if(mCollidedTime > 0.0f)
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+        if (mCollidedTime > 0.0f)
         {
             return;
         }
@@ -49,10 +58,15 @@ public class Obstacle : MonoBehaviour
             case ObstacleType.Damage:
                 {
                     pRaft.mHealth -= mDamageAmount;
+                    EffectsManager.Instance.DamageEffect();
                     if (pRaft.mHealth <= 0.0f)
                     {
                         pRaft.mHealth = 0.0f;
-                        //do gameover
+                        //GAME LOST
+                        object[] content = new object[] { "LOST" };
+                        NetworkManager.Instance.RaiseEvent(NetworkManager.EVNT_GAMELOST, content,
+                            new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.All },
+                            new ExitGames.Client.Photon.SendOptions { Reliability = true });
                     }
                     break;
                 }
