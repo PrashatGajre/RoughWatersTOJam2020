@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +8,7 @@ public class DataHandler : Singleton<DataHandler>
     public Raft[] mActiveRafts;
     public Transform mRaftTargetGroup;
     [SerializeField] float mLevelTraversalScore = 10.0f;
-    [HideInInspector] public float mCurrentScore = 0;
-    [HideInInspector] public float mScoreMultiplier = 1.0f;
+    [HideInInspector] public Score mScore;
     float mCurrentMaxDistance = 0.0f;
     Vector3 mStartPosition = Vector3.zero;
 
@@ -36,10 +36,14 @@ public class DataHandler : Singleton<DataHandler>
 
     void Update()
     {
+        if(!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         float aDistance = Vector3.Distance(mRaftTargetGroup.position, mStartPosition);
         if(mCurrentMaxDistance < aDistance)
         {
-            mCurrentScore += mScoreMultiplier * mLevelTraversalScore * (aDistance - mCurrentMaxDistance);
+            mScore.mScore += mScore.mScoreMultiplier * mLevelTraversalScore * (aDistance - mCurrentMaxDistance);
             mCurrentMaxDistance = aDistance;
         }
     }

@@ -43,12 +43,12 @@ public class Item : MonoBehaviour
                     }
                 case Type.Multiplier:
                     {
-                        DataHandler.Instance.mScoreMultiplier *= mModifierAmount;
+                        DataHandler.Instance.mScore.mScoreMultiplier *= mModifierAmount;
                         break;
                     }
                 case Type.Score:
                     {
-                        DataHandler.Instance.mCurrentScore += DataHandler.Instance.mScoreMultiplier * mModifierAmount;
+                        DataHandler.Instance.mScore.mScore += DataHandler.Instance.mScore.mScoreMultiplier * mModifierAmount;
                         break;
                     }
             }
