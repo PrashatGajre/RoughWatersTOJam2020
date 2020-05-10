@@ -125,10 +125,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -413,7 +413,11 @@ MonoBehaviour:
   mSelected: 0
   mRaftIndex: 0
   mSpeed: 50
+  mFatigueDecreaseRate: 10
+  mFatigueIncreaseRate: 10
   mRigidbody: {fileID: 5865249965320430251}
+  mMaxHealth: 100
+  mMaxFatigue: 100
   mHealth: 100
   mFatigue: 100
   mSelectedSprite: {fileID: 5865249965364349695}
@@ -722,7 +726,11 @@ MonoBehaviour:
   mSelected: 0
   mRaftIndex: 0
   mSpeed: 50
+  mFatigueDecreaseRate: 10
+  mFatigueIncreaseRate: 10
   mRigidbody: {fileID: 5865249965658348250}
+  mMaxHealth: 100
+  mMaxFatigue: 100
   mHealth: 100
   mFatigue: 100
   mSelectedSprite: {fileID: 5865249964983994818}
@@ -868,10 +876,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -1061,10 +1069,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -1267,7 +1275,11 @@ MonoBehaviour:
   mSelected: 0
   mRaftIndex: 0
   mSpeed: 50
+  mFatigueDecreaseRate: 10
+  mFatigueIncreaseRate: 10
   mRigidbody: {fileID: 5865249966438254713}
+  mMaxHealth: 100
+  mMaxFatigue: 100
   mHealth: 100
   mFatigue: 100
   mSelectedSprite: {fileID: 5865249965322001516}
@@ -1399,10 +1411,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
