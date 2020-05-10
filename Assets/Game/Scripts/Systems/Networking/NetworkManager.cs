@@ -80,7 +80,7 @@ public class NetworkManager : Singleton<NetworkManager>
     public void JoinRandomRoom()
     {
         int maxPlayers = 2;
-        PhotonNetwork.JoinRandomRoom(null, System.Convert.ToByte(maxPlayers));
+        PhotonNetwork.JoinRandomRoom(null, System.Convert.ToByte(maxPlayers), Photon.Realtime.MatchmakingMode.FillRoom, null, null);
     }
 
     public void JoinRandomRoomFailed(short returnCode, string message)
