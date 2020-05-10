@@ -30,6 +30,7 @@ public class NetworkManager : Singleton<NetworkManager>
     private void OnEnable()
     {
         NetworkManager.Instance.mNetworkCallbacks.OnConnectedToServerDelegate += ConnectedToServer;
+        NetworkManager.Instance.mNetworkCallbacks.OnJoinedLobbyDelegate += JoinedLobby;
         NetworkManager.Instance.mNetworkCallbacks.OnPlayerLeftRoomDelegate += PlayerLeftRoom;
         NetworkManager.Instance.mNetworkCallbacks.OnJoinRandomFailedDelegate += JoinRandomRoomFailed;
         NetworkManager.Instance.mNetworkCallbacks.OnJoinedRoomDelegate += CreateRoomSuccess;
@@ -40,6 +41,7 @@ public class NetworkManager : Singleton<NetworkManager>
     private void OnDisable()
     {
         NetworkManager.Instance.mNetworkCallbacks.OnConnectedToServerDelegate -= ConnectedToServer;
+        NetworkManager.Instance.mNetworkCallbacks.OnJoinedLobbyDelegate -= JoinedLobby;
         NetworkManager.Instance.mNetworkCallbacks.OnPlayerLeftRoomDelegate -= PlayerLeftRoom;
         NetworkManager.Instance.mNetworkCallbacks.OnJoinRandomFailedDelegate -= JoinRandomRoomFailed;
         NetworkManager.Instance.mNetworkCallbacks.OnJoinedRoomDelegate -= CreateRoomSuccess;
@@ -73,14 +75,19 @@ public class NetworkManager : Singleton<NetworkManager>
 
     public void ConnectedToServer()
     {
-        MenuManager.Instance.HideLoad();
+        PhotonNetwork.JoinLobby(new TypedLobby(LOBBY_NAME, LobbyType.Default));
         //MenuManager.Instance.ShowMenu(mStartMenu);
+    }
+
+    public void JoinedLobby()
+    {
+        MenuManager.Instance.HideLoad();
     }
 
     public void JoinRandomRoom()
     {
         int maxPlayers = 2;
-        PhotonNetwork.JoinRandomRoom(null, System.Convert.ToByte(maxPlayers), Photon.Realtime.MatchmakingMode.FillRoom, null, null);
+        PhotonNetwork.JoinRandomRoom(null, System.Convert.ToByte(maxPlayers), Photon.Realtime.MatchmakingMode.FillRoom, new TypedLobby(LOBBY_NAME, LobbyType.Default), null);
     }
 
     public void JoinRandomRoomFailed(short returnCode, string message)
