@@ -1,4 +1,6 @@
 ﻿using Cinemachine;
+using ExitGames.Client.Photon;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +19,17 @@ public class EffectsManager : Singleton<EffectsManager>
         [HideInInspector] public float mCurrentCounter;
     }
 
-    [HideInInspector]public IngameHUD mGameHUD = null;
+    [System.Serializable]
+    public struct EffectEvents
+    {
+        public int mEventType;
+        public int mItemType;
+    }
+
+    [HideInInspector] public IngameHUD mGameHUD = null;
     [Header("Score Scale Settings")]
-    [SerializeField] Vector3 mScoreScaleUp = new Vector3(3,3,3);
-    [SerializeField] Vector3 mScoreMultiplierScaleUp = new Vector3(3,3,3);
+    [SerializeField] Vector3 mScoreScaleUp = new Vector3(3, 3, 3);
+    [SerializeField] Vector3 mScoreMultiplierScaleUp = new Vector3(3, 3, 3);
     Vector3 mDefaultScoreScale = Vector3.one;
     Vector3 mDefaultScoreMultiplierScale = Vector3.one;
     [SerializeField] float mScaleUpEffectTime = 0.3f;
@@ -36,6 +45,41 @@ public class EffectsManager : Singleton<EffectsManager>
     [SerializeField] float mAmplitudeGain = 1.5f;
     [SerializeField] float mFrequencyGain = 6.0f;
     CinemachineBasicMultiChannelPerlin mCameraShakeNoise;
+
+    void Start()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived += OnClientEvents;
+    }
+    void OnDestroy()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= OnClientEvents;
+    }
+
+    public void OnClientEvents(EventData photonEvent)
+    {
+        if(photonEvent.Code != NetworkManager.EVNT_EFFECTS)
+        {
+            return;
+        }
+        EffectEvents aEvent = new EffectEvents();
+        object[] aData = (object[])photonEvent.CustomData;
+        GenHelpers.DeSerializeData((byte[])aData[0],ref aEvent);
+        switch(aEvent.mEventType)
+        {
+            case 0:
+                {
+                    DamageEffect();
+                    break;
+                }
+            case 1:
+                {
+                    ItemCollectedEffect((Item.Type)aEvent.mItemType);
+                    break;
+                }
+        }
+    }
+
+
     public void SetInGameHUD(IngameHUD pHUD)
     {
         mGameHUD = pHUD;
@@ -71,12 +115,50 @@ public class EffectsManager : Singleton<EffectsManager>
     public void ItemCollectedEffect(Item.Type pType)
     {
         int aIx = (int)pType;
+        if(PhotonNetwork.IsMasterClient)
+        {
+            EffectEvents aEventData = new EffectEvents()
+            {
+                mEventType = 1,
+                mItemType = aIx
+            };
+            NetworkManager.Instance.RaiseEvent(
+                NetworkManager.EVNT_EFFECTS,
+                new object[] { GenHelpers.SerializeData(aEventData) 
+                },new Photon.Realtime.RaiseEventOptions()
+                {
+                    Receivers = Photon.Realtime.ReceiverGroup.Others
+                },
+                new SendOptions()
+                {
+                    Reliability = true
+                });
+        }
         mItemEffects[aIx].mCurrentCounter = 0;
         VignetteEffectCaller(mItemEffects[aIx]);
     }
 
     public void DamageEffect()
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            EffectEvents aEventData = new EffectEvents()
+            {
+                mEventType = 0,
+                mItemType = 0
+            };
+            NetworkManager.Instance.RaiseEvent(
+                NetworkManager.EVNT_EFFECTS,
+                new object[] { GenHelpers.SerializeData(aEventData)
+                }, new Photon.Realtime.RaiseEventOptions()
+                {
+                    Receivers = Photon.Realtime.ReceiverGroup.Others
+                },
+                new SendOptions()
+                {
+                    Reliability = true
+                });
+        }
         mDamageEffect.mCurrentCounter = 0;
         VignetteEffectCaller(mDamageEffect);
         if(mCameraShakeNoise == null)
@@ -124,9 +206,18 @@ public class EffectsManager : Singleton<EffectsManager>
             {
                 LeanTween.value(mGameHUD.mVignetteImage.gameObject, pEffect.mEffectColor.a, mImageDefaultAlpha, pEffect.mEffectDownTime)
                 .setDelay(pEffect.mEffectDownDelay)
-                .setOnComplete(() => VignetteEffectCaller(pEffect));
+                .setOnComplete(() => VignetteEffectCaller(pEffect))
+                .setOnUpdate(UpdateVignetteAlpha);
             })
-            .setOnStart(() => { pEffect.mCurrentCounter++; });
+            .setOnStart(() => { pEffect.mCurrentCounter++; })
+            .setOnUpdate(UpdateVignetteAlpha);
+    }
+
+    void UpdateVignetteAlpha(float pValue)
+    {
+        Color aColor = mGameHUD.mVignetteImage.color;
+        aColor.a = pValue;
+        mGameHUD.mVignetteImage.color = aColor;
     }
 
 }
