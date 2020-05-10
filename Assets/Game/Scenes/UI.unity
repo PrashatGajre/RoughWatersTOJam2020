@@ -2500,6 +2500,7 @@ MonoBehaviour:
   mVisibleCallbackTime: 0.7
   mScoreText: {fileID: 1173077309}
   mScoreMultiplierText: {fileID: 1539017204}
+  mVignetteImage: {fileID: 77149035}
 --- !u!1 &1422286563
 GameObject:
   m_ObjectHideFlags: 0
