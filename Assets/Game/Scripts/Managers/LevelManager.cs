@@ -78,6 +78,13 @@ public class LevelManager : MonoBehaviour
                         {
                             Debug.Log("ACTIVE RAFT FOUND : " + activeRaft.gameObject.name);
                             activeRaft.mSelected = true;
+                            ExitGames.Client.Photon.Hashtable customProperties = Photon.Pun.PhotonNetwork.CurrentRoom.CustomProperties;
+                            bool[] selectedRafts = (bool[])customProperties["selectedRafts"];
+
+                            selectedRafts[(int)activeRaft.mRaftIndex] = true;
+
+                            customProperties["selectedRafts"] = selectedRafts;
+                            Photon.Pun.PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
                             pc.mCurrentRaft = activeRaft;
                             break;
                         }

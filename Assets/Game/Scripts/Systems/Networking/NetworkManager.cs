@@ -109,6 +109,10 @@ public class NetworkManager : Singleton<NetworkManager>
     {
         Debug.Log("Room joined taking to the room menu");
 
+        ExitGames.Client.Photon.Hashtable customProperties = PhotonNetwork.CurrentRoom.CustomProperties;
+        customProperties.Add("selectedRafts", new bool[] { false, false, false });
+        PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
+
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             if (player.NickName == mPlayerNickName)

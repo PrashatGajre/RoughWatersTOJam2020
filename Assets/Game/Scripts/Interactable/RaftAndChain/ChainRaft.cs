@@ -26,12 +26,15 @@ public class ChainRaft : Raft
     protected override void Start()
     {
         base.Start();
-        ConnectionSetup(mRightChainJoint, mRightRaft);
-        ConnectionSetup(mLeftChainJoint, mLeftRaft);
-        mCurrentChainLength++;
-        for(int aI = 1; aI < mGameStartChainLength; aI ++)
+        if (photonView.IsMine)
         {
-            AddNewChainConnection();
+            ConnectionSetup(mRightChainJoint, mRightRaft);
+            ConnectionSetup(mLeftChainJoint, mLeftRaft);
+            mCurrentChainLength++;
+            for (int aI = 1; aI < mGameStartChainLength; aI++)
+            {
+                AddNewChainConnection();
+            }
         }
     }
 

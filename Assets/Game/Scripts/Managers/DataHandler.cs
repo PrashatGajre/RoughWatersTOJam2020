@@ -14,6 +14,17 @@ public class DataHandler : Singleton<DataHandler>
 
     public bool mGameStarted = false;
 
+    private void OnEnable()
+    {
+        NetworkManager.Instance.mNetworkCallbacks.OnRoomPropertiesUpdateDelegate += Propertiesupdated;
+    }
+
+    private void OnDisable()
+    {
+        NetworkManager.Instance.mNetworkCallbacks.OnRoomPropertiesUpdateDelegate -= Propertiesupdated;
+        
+    }
+
     void Start()
     {
         for(int aI = 0; aI < mActiveRafts.Length;aI ++)
@@ -33,5 +44,17 @@ public class DataHandler : Singleton<DataHandler>
         }
     }
 
+    public void Propertiesupdated(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        if (propertiesThatChanged.ContainsKey("selectedRafts"))
+        {
+            bool[] selectedRafts = (bool[])propertiesThatChanged["selectedRafts"];
+
+            for (int i = 0; i < selectedRafts.Length; i++)
+            {
+                mActiveRafts[i].mSelected = selectedRafts[i];
+            }
+        }
+    }
 
 }
