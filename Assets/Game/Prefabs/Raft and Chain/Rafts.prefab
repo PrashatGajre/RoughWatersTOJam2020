@@ -72,7 +72,6 @@ GameObject:
   - component: {fileID: 5865249964944149931}
   - component: {fileID: 5865249964944149847}
   - component: {fileID: 8915835332897072141}
-  - component: {fileID: 2655552862940990929}
   - component: {fileID: 563667960871046512}
   m_Layer: 11
   m_Name: RightRaftChain
@@ -270,27 +269,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 2655552862940990929}
   - {fileID: 563667960871046512}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2655552862940990929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5865249964944149845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &563667960871046512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,6 +383,8 @@ GameObject:
   - component: {fileID: 5865249965320430250}
   - component: {fileID: 5865249965320430251}
   - component: {fileID: 5865249965320430248}
+  - component: {fileID: 139777052912141405}
+  - component: {fileID: 7424065035851405200}
   m_Layer: 11
   m_Name: LeftRaft
   m_TagString: Untagged
@@ -537,6 +521,44 @@ MonoBehaviour:
   mGravityScaleMultiplier: 1
   mSelectedGravityScale: 0.65
   mUnSelectedGravityScale: 1
+--- !u!114 &139777052912141405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865249965320430249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 7424065035851405200}
+  - {fileID: 5865249965320430248}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &7424065035851405200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865249965320430249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 0
+  m_SynchronizeScale: 0
 --- !u!1 &5865249965322001516
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,6 +736,8 @@ GameObject:
   - component: {fileID: 5865249965658348248}
   - component: {fileID: 5865249965658348250}
   - component: {fileID: 5865249965658348251}
+  - component: {fileID: 736582033282391451}
+  - component: {fileID: 1691198180037697993}
   m_Layer: 11
   m_Name: ChainRaft
   m_TagString: Untagged
@@ -863,6 +887,44 @@ MonoBehaviour:
   mRightEndChain: {fileID: 5865249964944149847}
   mChainParent: {fileID: 5865249966940178009}
   mChainIncreaseDelay: 0.3
+--- !u!114 &736582033282391451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865249965658348231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 1691198180037697993}
+  - {fileID: 5865249965658348251}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1691198180037697993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865249965658348231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 0
+  m_SynchronizeScale: 0
 --- !u!1 &5865249965794657056
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,7 +941,6 @@ GameObject:
   - component: {fileID: 5865249965794657062}
   - component: {fileID: 5865249965794657058}
   - component: {fileID: 6883778968968318536}
-  - component: {fileID: 7120129680628905516}
   - component: {fileID: 201112837358846389}
   m_Layer: 11
   m_Name: LeftChainRaftChain
@@ -1077,27 +1138,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 7120129680628905516}
   - {fileID: 201112837358846389}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7120129680628905516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5865249965794657056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &201112837358846389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1129,7 +1173,6 @@ GameObject:
   - component: {fileID: 5865249966203912406}
   - component: {fileID: 5865249966203912402}
   - component: {fileID: 6488409096478127730}
-  - component: {fileID: 5206797670128287288}
   - component: {fileID: 6930172153547402467}
   m_Layer: 11
   m_Name: LeftRaftChain
@@ -1327,27 +1370,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 5206797670128287288}
   - {fileID: 6930172153547402467}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &5206797670128287288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5865249966203912400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &6930172153547402467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1376,6 +1402,8 @@ GameObject:
   - component: {fileID: 5865249966438254712}
   - component: {fileID: 5865249966438254713}
   - component: {fileID: 5865249966438254694}
+  - component: {fileID: 6238665233153532122}
+  - component: {fileID: 2121392030358558822}
   m_Layer: 11
   m_Name: RightRaft
   m_TagString: Untagged
@@ -1512,6 +1540,44 @@ MonoBehaviour:
   mGravityScaleMultiplier: 1
   mSelectedGravityScale: 0.65
   mUnSelectedGravityScale: 1
+--- !u!114 &6238665233153532122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865249966438254695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 2121392030358558822}
+  - {fileID: 5865249966438254694}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &2121392030358558822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865249966438254695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 0
+  m_SynchronizeScale: 0
 --- !u!1 &5865249966669254087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,7 +1594,6 @@ GameObject:
   - component: {fileID: 5865249966669254105}
   - component: {fileID: 5865249966669254104}
   - component: {fileID: 1283186791005230743}
-  - component: {fileID: 3996817223639739963}
   - component: {fileID: 1258470942016135936}
   m_Layer: 11
   m_Name: RightChainRaftChain
@@ -1726,27 +1791,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 3996817223639739963}
   - {fileID: 1258470942016135936}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &3996817223639739963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5865249966669254087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &1258470942016135936
 MonoBehaviour:
   m_ObjectHideFlags: 0
