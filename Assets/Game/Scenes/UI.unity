@@ -1381,7 +1381,7 @@ MonoBehaviour:
   mVisibleCallbackTime: 0.7
   mGameOverTitleText: {fileID: 967100636}
   mScoreText: {fileID: 3165619}
-  mReturnToMainButton: {fileID: 0}
+  mReturnToMainButton: {fileID: 357129331}
 --- !u!225 &646184167
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1613,7 +1613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mMenuClassifier: {fileID: 11400000, guid: 2f143ba69c9640948afcebc5eaea560e, type: 2}
-  mStartMenuState: 1
+  mStartMenuState: 2
   mResetPosition: 1
   mDelay: 0.1
   mFadeInTime: 0.2
@@ -1986,9 +1986,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -120, y: 0}
+  m_AnchoredPosition: {x: -70, y: 0}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1124584757
 Animator:
   serializedVersion: 3
@@ -2638,9 +2638,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: 0}
+  m_AnchoredPosition: {x: -50, y: 0}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1434776780
 Animator:
   serializedVersion: 3

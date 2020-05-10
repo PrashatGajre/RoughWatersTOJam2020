@@ -14,8 +14,10 @@ public class IngameHUD : Menu
     }
     private void Update()
     {
-        mScoreText.text = ((int)DataHandler.Instance.mScore.mScore).ToString();
-        mScoreMultiplierText.text = "x " + ((int)DataHandler.Instance.mScore.mScoreMultiplier).ToString();
-
+        if (DataHandler.IsValidSingleton())
+        {
+            mScoreText.text = ((int)DataHandler.Instance.mScore.mScore).ToString();
+            mScoreMultiplierText.text = "x " + ((int)DataHandler.Instance.mScore.mScoreMultiplier).ToString();
+        }
     }
 }
