@@ -7,6 +7,7 @@ public class IngameHUD : Menu
 {
     public Text mScoreText;
     public Text mScoreMultiplierText;
+    public Image mVignetteImage;
     public override void Start()
     {
         EffectsManager.Instance.SetInGameHUD(this);

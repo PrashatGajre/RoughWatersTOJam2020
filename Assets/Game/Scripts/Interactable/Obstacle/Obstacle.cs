@@ -58,6 +58,7 @@ public class Obstacle : MonoBehaviour
             case ObstacleType.Damage:
                 {
                     pRaft.mHealth -= mDamageAmount;
+                    EffectsManager.Instance.DamageEffect();
                     if (pRaft.mHealth <= 0.0f)
                     {
                         pRaft.mHealth = 0.0f;

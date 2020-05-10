@@ -1,14 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : Singleton<LevelManager>
 {
     [SerializeField] string mLevelDataPrefabName;
     [SerializeField] string mPlayerDataPrefabName;
     [SerializeField] MenuClassifier mSceneLoadingMenuClassifier;
-    [SerializeField] Cinemachine.CinemachineVirtualCamera mLevelCam;
+    public Cinemachine.CinemachineVirtualCamera mLevelCam;
 
     Vector2 gravity;
 

@@ -26,6 +26,7 @@ public class Item : MonoBehaviour
         Raft aRaft = collision.GetComponent<Raft>();
         if (aRaft != null)
         {
+            EffectsManager.Instance.ItemCollectedEffect(mType);
             switch (mType)
             {
                 case Type.Fatigue:

@@ -117,7 +117,7 @@ public class RoomMenu : Menu
 
         if (allPlayerScenesLoaded)
         {
-            GameObject.FindObjectOfType<LevelManager>().Init();
+            LevelManager.Instance.Init();
             MenuManager.Instance.HideMenu(mMenuClassifier);
         }
     }
