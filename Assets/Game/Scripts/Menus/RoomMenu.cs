@@ -112,8 +112,8 @@ public class RoomMenu : Menu
             if (totalScenesLoaded == Photon.Pun.PhotonNetwork.CurrentRoom.PlayerCount)
             {
                 allPlayerScenesLoaded = true;
+                totalScenesLoaded = 0;
             }
-            totalScenesLoaded = 0;
         }
 
 
