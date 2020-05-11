@@ -3,6 +3,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DataHandler : Singleton<DataHandler>
 {
@@ -133,22 +134,26 @@ public class DataHandler : Singleton<DataHandler>
         }
         object[] aData = (object[])pData.CustomData;
         bool aMaster = (bool)aData[0];
-        foreach (Raft aRaft in mActiveRafts)
+
+        int aCurIx = aMaster ? (int)mMasterRaft : (int)mClientRaft;
+        aCurIx = (aCurIx + 1) % mActiveRafts.Length;
+        while(aCurIx != (aMaster ? (int)mMasterRaft : (int) mClientRaft ))
         {
-            if (!aRaft.mSelected)
+            if (!mActiveRafts[aCurIx].mSelected)
             {
                 ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable();
                 if(aMaster)
                 {
-                    customProperties.Add("MasterPlayer", (int) aRaft.mRaftIndex);
+                    customProperties.Add("MasterPlayer", aCurIx);
                 }
                 else
                 {
-                    customProperties.Add("ClientPlayer", (int)aRaft.mRaftIndex);
+                    customProperties.Add("ClientPlayer", aCurIx);
                 }
                 PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
                 break;
             }
+            aCurIx = (aCurIx + 1) % mActiveRafts.Length;
         }
     }
 
@@ -174,10 +179,11 @@ public class DataHandler : Singleton<DataHandler>
             {
                 customProperties["ClientPlayer"] = 2;
             }
-            Score aScore = new Score();
-            aScore.mScore = 0.0f;
-            aScore.mScoreMultiplier = 1.0f;
-            customProperties.Add("scoreStruct", GenHelpers.SerializeData(aScore));
+            mScore = new Score();
+            mScore.mScore = 0.0f;
+            mScore.mScoreMultiplier = 1.0f;
+            byte[] aByteArray = GenHelpers.SerializeData(mScore);
+            customProperties.Add("scoreStruct", aByteArray);
             PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
         }
 
