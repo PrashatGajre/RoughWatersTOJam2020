@@ -63,40 +63,6 @@ public class LevelManager : Singleton<LevelManager>
         PlayerController[] playerControllers = GameObject.FindObjectsOfType<PlayerController>();
         //Debug.Log("PLAYER CONTROLLERS FOUND : " + playerControllers.Length);
         //DataHandler dataHandler = GameObject.FindObjectOfType<DataHandler>();
-        if(PhotonNetwork.IsMasterClient)
-        {
-            ExitGames.Client.Photon.Hashtable customProperties = Photon.Pun.PhotonNetwork.CurrentRoom.CustomProperties;
-            foreach (PlayerController pc in playerControllers)
-            {
-                //Debug.Log("PLAYER CONTROLLER ITERATION");
-                Photon.Pun.PhotonView pcView = pc.gameObject.GetComponent<Photon.Pun.PhotonView>();
-                if (pcView != null)
-                {
-                    //if (pcView.IsMine)
-                    //{
-                    //Debug.Log("PHOTONVIEW IS MINE");
-                    foreach (Raft activeRaft in DataHandler.Instance.mActiveRafts)
-                    {
-                        //Debug.Log("ITERATING ACTIVE RAFTS");
-                        if (!activeRaft.mSelected)
-                        {
-                            //Debug.Log("ACTIVE RAFT FOUND : " + activeRaft.gameObject.name);
-                            activeRaft.mSelected = true;
-                            bool[] selectedRafts = (bool[])customProperties["selectedRafts"];
-
-                            selectedRafts[(int)activeRaft.mRaftIndex] = true;
-
-                            customProperties["selectedRafts"] = selectedRafts;
-                            pc.mCurrentRaft = activeRaft;
-                            break;
-                        }
-                    }
-                    //}
-                }
-            }
-            Photon.Pun.PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
-        }
-
         yield return new WaitForSeconds(0.3f);
      
         OnSceneReadyEvent(new object[]{1});

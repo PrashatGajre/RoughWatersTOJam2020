@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
                     actionEvent.AddListener(OnChangeRaft);
                 }
             }
+            mCurrentRaft = DataHandler.Instance.mActiveRafts[(PhotonNetwork.IsMasterClient ? 0 : 2)];
+            mCurrentRaft.mSelected = true;
         }
     }
 

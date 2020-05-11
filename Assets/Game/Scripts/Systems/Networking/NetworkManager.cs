@@ -128,7 +128,7 @@ public class NetworkManager : Singleton<NetworkManager>
         ExitGames.Client.Photon.Hashtable customProperties = PhotonNetwork.CurrentRoom.CustomProperties;
         if (!customProperties.ContainsKey("selectedRafts"))
         {
-            customProperties.Add("selectedRafts", new bool[] { false, false, false });
+            customProperties.Add("selectedRafts", new bool[] { true, false, true });
             Score aScore = new Score();
             aScore.mScore = 0.0f;
             aScore.mScoreMultiplier = 1.0f;
