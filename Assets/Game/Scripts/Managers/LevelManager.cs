@@ -127,6 +127,17 @@ public class LevelManager : Singleton<LevelManager>
 
     public void SpawnPlayer()
     {
+        Raft[] allRafts = FindObjectsOfType<Raft>();
+
+        foreach (Raft aRaft in allRafts)
+        {
+            DataHandler.Instance.mActiveRafts[(int)aRaft.mRaftIndex] = aRaft;
+        }
+
+        Cinemachine.CinemachineTargetGroup target = GameObject.FindObjectOfType<Cinemachine.CinemachineTargetGroup>();
+
+        DataHandler.Instance.mRaftTargetGroup = target.gameObject.transform;
+
         //Debug.Log("Creating Player");
         GameObject player = Photon.Pun.PhotonNetwork.Instantiate(mPlayerDataPrefabName, Vector3.zero, Quaternion.identity);
         //Debug.Log("Creating Created");

@@ -78,9 +78,11 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
                         aRaft.mSelected = true;
                         ExitGames.Client.Photon.Hashtable customProperties = PhotonNetwork.CurrentRoom.CustomProperties;
                         bool[] selectedRafts = (bool[])customProperties["selectedRafts"];
+                        customProperties = new ExitGames.Client.Photon.Hashtable();
                         selectedRafts[(int)mCurrentRaft.mRaftIndex] = false;
                         selectedRafts[(int)aRaft.mRaftIndex] = true;
-                        customProperties["selectedRafts"] = selectedRafts;
+                        //customProperties["selectedRafts"] = selectedRafts;
+                        customProperties.Add("selectedRafts",selectedRafts);
                         PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
                         mCurrentRaft = aRaft;
                     }
