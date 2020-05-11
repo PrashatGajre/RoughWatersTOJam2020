@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,36 +63,38 @@ public class LevelManager : Singleton<LevelManager>
         PlayerController[] playerControllers = GameObject.FindObjectsOfType<PlayerController>();
         //Debug.Log("PLAYER CONTROLLERS FOUND : " + playerControllers.Length);
         //DataHandler dataHandler = GameObject.FindObjectOfType<DataHandler>();
-                
-        foreach (PlayerController pc in playerControllers)
+        if(PhotonNetwork.IsMasterClient)
         {
-            //Debug.Log("PLAYER CONTROLLER ITERATION");
-            Photon.Pun.PhotonView pcView = pc.gameObject.GetComponent<Photon.Pun.PhotonView>();
-            if (pcView != null)
+            ExitGames.Client.Photon.Hashtable customProperties = Photon.Pun.PhotonNetwork.CurrentRoom.CustomProperties;
+            foreach (PlayerController pc in playerControllers)
             {
-                if (pcView.IsMine)
+                //Debug.Log("PLAYER CONTROLLER ITERATION");
+                Photon.Pun.PhotonView pcView = pc.gameObject.GetComponent<Photon.Pun.PhotonView>();
+                if (pcView != null)
                 {
+                    //if (pcView.IsMine)
+                    //{
                     //Debug.Log("PHOTONVIEW IS MINE");
-                    foreach (Raft activeRaft in DataHandler.Instance.mActiveRafts) 
+                    foreach (Raft activeRaft in DataHandler.Instance.mActiveRafts)
                     {
                         //Debug.Log("ITERATING ACTIVE RAFTS");
                         if (!activeRaft.mSelected)
                         {
                             //Debug.Log("ACTIVE RAFT FOUND : " + activeRaft.gameObject.name);
                             activeRaft.mSelected = true;
-                            ExitGames.Client.Photon.Hashtable customProperties = Photon.Pun.PhotonNetwork.CurrentRoom.CustomProperties;
                             bool[] selectedRafts = (bool[])customProperties["selectedRafts"];
 
                             selectedRafts[(int)activeRaft.mRaftIndex] = true;
 
                             customProperties["selectedRafts"] = selectedRafts;
-                            Photon.Pun.PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
                             pc.mCurrentRaft = activeRaft;
                             break;
                         }
                     }
+                    //}
                 }
             }
+            Photon.Pun.PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
         }
 
         yield return new WaitForSeconds(0.3f);
