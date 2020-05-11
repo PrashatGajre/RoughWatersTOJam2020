@@ -58,11 +58,17 @@ public class LevelManager : Singleton<LevelManager>
             Debug.Log(mLevelCam.gameObject.name);
         }
         mLevelCam.Follow = DataHandler.Instance.mActiveRafts[(int)Raft.RaftType.Red].transform;
+        if(PhotonNetwork.IsMasterClient)
+        {
+            ExitGames.Client.Photon.Hashtable customProperties = PhotonNetwork.CurrentRoom.CustomProperties;
+            customProperties.Add("selectedRafts", new bool[] { true, false, true });
+            Score aScore = new Score();
+            aScore.mScore = 0.0f;
+            aScore.mScoreMultiplier = 1.0f;
+            customProperties.Add("scoreStruct", GenHelpers.SerializeData(aScore));
+            PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
+        }
 
-        /******SETUP PLAYER HERE*******/
-        PlayerController[] playerControllers = GameObject.FindObjectsOfType<PlayerController>();
-        //Debug.Log("PLAYER CONTROLLERS FOUND : " + playerControllers.Length);
-        //DataHandler dataHandler = GameObject.FindObjectOfType<DataHandler>();
         yield return new WaitForSeconds(0.3f);
      
         OnSceneReadyEvent(new object[]{1});

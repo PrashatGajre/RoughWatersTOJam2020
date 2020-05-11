@@ -124,17 +124,6 @@ public class NetworkManager : Singleton<NetworkManager>
     public void CreateRoomSuccess()
     {
         Debug.Log("Room joined taking to the room menu");
-
-        ExitGames.Client.Photon.Hashtable customProperties = PhotonNetwork.CurrentRoom.CustomProperties;
-        if (!customProperties.ContainsKey("selectedRafts"))
-        {
-            customProperties.Add("selectedRafts", new bool[] { true, false, true });
-            Score aScore = new Score();
-            aScore.mScore = 0.0f;
-            aScore.mScoreMultiplier = 1.0f;
-            customProperties.Add("scoreStruct", GenHelpers.SerializeData(aScore));
-            PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
-        }
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             if (player.NickName == mPlayerNickName)
