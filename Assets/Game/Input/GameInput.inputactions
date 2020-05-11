@@ -89,7 +89,7 @@
                 {
                     "name": "negative",
                     "id": "c38abcfd-6e75-4bbc-946b-025be41c9de6",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "AxisDeadzone",
                     "groups": "Keyboard&Mouse",
@@ -100,7 +100,7 @@
                 {
                     "name": "positive",
                     "id": "c78959ee-f7e6-4d8b-a992-1847f203c8aa",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "AxisDeadzone",
                     "groups": "Keyboard&Mouse",
