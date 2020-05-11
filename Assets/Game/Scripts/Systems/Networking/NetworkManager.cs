@@ -16,7 +16,7 @@ public class NetworkManager : Singleton<NetworkManager>
     public static byte EVNT_GAMESCENEREADY = 3;
     public static byte EVNT_GAMEWON = 4;
     public static byte EVNT_GAMELOST = 5;
-    //public static byte EVNT_GAMEOVER = 6;
+    public static byte EVNT_CHANGERAFT = 6;
     public static byte EVNT_EFFECTS = 7;
     string mPlayerNickName;
 

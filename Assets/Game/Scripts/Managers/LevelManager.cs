@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class LevelManager : Singleton<LevelManager>
 {
     [SerializeField] string mLevelDataPrefabName;
-    [SerializeField] string mPlayerDataPrefabName;
+    //[SerializeField] string mPlayerDataPrefabName;
     [SerializeField] float mCurrentFlow = 10.0f;
     [SerializeField] MenuClassifier mSceneLoadingMenuClassifier;
     public Cinemachine.CinemachineVirtualCamera mLevelCam;
@@ -47,8 +47,8 @@ public class LevelManager : Singleton<LevelManager>
             */
         }
         yield return new WaitForSeconds(3.0f);
-
-        SpawnPlayer();
+        DataHandler.Instance.Init();
+        //SpawnPlayer();
 
         yield return new WaitForSeconds(2.0f);
 
@@ -58,23 +58,6 @@ public class LevelManager : Singleton<LevelManager>
             Debug.Log(mLevelCam.gameObject.name);
         }
         mLevelCam.Follow = DataHandler.Instance.mActiveRafts[(int)Raft.RaftType.Red].transform;
-        if(PhotonNetwork.IsMasterClient)
-        {
-            ExitGames.Client.Photon.Hashtable customProperties = PhotonNetwork.CurrentRoom.CustomProperties;
-            if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
-            {
-                customProperties.Add("selectedRafts", new bool[] { true, false, true });
-            }
-            else
-            {
-                customProperties.Add("selectedRafts", new bool[] { true, false, false });
-            }
-            Score aScore = new Score();
-            aScore.mScore = 0.0f;
-            aScore.mScoreMultiplier = 1.0f;
-            customProperties.Add("scoreStruct", GenHelpers.SerializeData(aScore));
-            PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
-        }
 
         yield return new WaitForSeconds(0.3f);
      
@@ -127,21 +110,11 @@ public class LevelManager : Singleton<LevelManager>
 
     public void SpawnPlayer()
     {
-        Raft[] allRafts = FindObjectsOfType<Raft>();
 
-        foreach (Raft aRaft in allRafts)
-        {
-            DataHandler.Instance.mActiveRafts[(int)aRaft.mRaftIndex] = aRaft;
-        }
-
-        Cinemachine.CinemachineTargetGroup target = GameObject.FindObjectOfType<Cinemachine.CinemachineTargetGroup>();
-
-        DataHandler.Instance.mRaftTargetGroup = target.gameObject.transform;
-
-        //Debug.Log("Creating Player");
-        GameObject player = Photon.Pun.PhotonNetwork.Instantiate(mPlayerDataPrefabName, Vector3.zero, Quaternion.identity);
-        //Debug.Log("Creating Created");
-        player.name = Photon.Pun.PhotonNetwork.NickName;
-        //Debug.Log("Creating Nickname Changed");
+        ////Debug.Log("Creating Player");
+        //GameObject player = Photon.Pun.PhotonNetwork.Instantiate(mPlayerDataPrefabName, Vector3.zero, Quaternion.identity);
+        ////Debug.Log("Creating Created");
+        //player.name = Photon.Pun.PhotonNetwork.NickName;
+        ////Debug.Log("Creating Nickname Changed");
     }
 }

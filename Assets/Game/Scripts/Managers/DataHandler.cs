@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class DataHandler : Singleton<DataHandler>
 {
     public Raft[] mActiveRafts;
+    public PlayerController mPlayerController;
     public Transform mRaftTargetGroup;
     [SerializeField] float mLevelTraversalScore = 10.0f;
     [HideInInspector] public Score mScore;
@@ -15,14 +17,21 @@ public class DataHandler : Singleton<DataHandler>
     Vector3 mStartPosition = Vector3.zero;
 
     public bool mGameStarted = false;
+
+    Raft.RaftType mMasterRaft = Raft.RaftType.Purple;
+    Raft.RaftType mClientRaft = Raft.RaftType.Yellow;
+    bool mSinglePlayer = false;
     private void OnEnable()
     {
         NetworkManager.Instance.mNetworkCallbacks.OnRoomPropertiesUpdateDelegate += Propertiesupdated;
+        PhotonNetwork.NetworkingClient.EventReceived += OnChangeRaftEvent;
     }
 
     private void OnDisable()
     {
         NetworkManager.Instance.mNetworkCallbacks.OnRoomPropertiesUpdateDelegate -= Propertiesupdated;
+        PhotonNetwork.NetworkingClient.EventReceived -= OnChangeRaftEvent;
+
     }
 
     void Update()
@@ -52,18 +61,51 @@ public class DataHandler : Singleton<DataHandler>
         }
     }
 
-    public void Propertiesupdated(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    void SetActiveRaftSelected()
     {
-        if (propertiesThatChanged.ContainsKey("selectedRafts"))
+        foreach(Raft aRaft in mActiveRafts)
         {
-            bool[] selectedRafts = (bool[])propertiesThatChanged["selectedRafts"];
-
-            for (int i = 0; i < selectedRafts.Length; i++)
+            if (mSinglePlayer)
             {
-                mActiveRafts[i].mSelected = selectedRafts[i];
+                aRaft.mSelected = aRaft.mRaftIndex == mMasterRaft;
+            }
+            else
+            {
+                aRaft.mSelected = aRaft.mRaftIndex == mMasterRaft || aRaft.mRaftIndex == mClientRaft;
             }
         }
-        if(propertiesThatChanged.ContainsKey("scoreStruct"))
+    }
+
+    public void Propertiesupdated(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        if(propertiesThatChanged.ContainsKey("MasterPlayer"))
+        {
+            object aMasterRaft = propertiesThatChanged["MasterPlayer"];
+            mMasterRaft = (Raft.RaftType)((int)aMasterRaft);
+            if(PhotonNetwork.IsMasterClient)
+            {
+                mPlayerController.mCurrentRaft = mActiveRafts[(int)mMasterRaft];
+            }
+            SetActiveRaftSelected();
+        }
+        if(propertiesThatChanged.ContainsKey("ClientPlayer"))
+        {
+            object aClientRaft = propertiesThatChanged["ClientPlayer"];
+            int aRaft = (int)aClientRaft;
+            if(aRaft == -1)
+            {
+                mSinglePlayer = true;
+                SetActiveRaftSelected();
+                return;
+            }
+            mClientRaft = (Raft.RaftType)((int)aClientRaft);
+            if(!PhotonNetwork.IsMasterClient)
+            {
+                mPlayerController.mCurrentRaft = mActiveRafts[(int)mClientRaft];
+            }
+            SetActiveRaftSelected();
+        }
+        if (propertiesThatChanged.ContainsKey("scoreStruct"))
         {
             object scoreStruct = propertiesThatChanged["scoreStruct"];
             GenHelpers.DeSerializeData((byte[])scoreStruct, ref mScore);
@@ -81,5 +123,65 @@ public class DataHandler : Singleton<DataHandler>
             }
         }
     }
+
+
+    public void OnChangeRaftEvent(EventData pData)
+    {
+        if(pData.Code != NetworkManager.EVNT_CHANGERAFT)
+        {
+            return;
+        }
+        object[] aData = (object[])pData.CustomData;
+        bool aMaster = (bool)aData[0];
+        foreach (Raft aRaft in mActiveRafts)
+        {
+            if (!aRaft.mSelected)
+            {
+                ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable();
+                if(aMaster)
+                {
+                    customProperties.Add("MasterPlayer", (int) aRaft.mRaftIndex);
+                }
+                else
+                {
+                    customProperties.Add("ClientPlayer", (int)aRaft.mRaftIndex);
+                }
+                PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
+                break;
+            }
+        }
+    }
+
+
+    public void Init()
+    {
+        Raft[] allRafts = FindObjectsOfType<Raft>();
+
+        foreach (Raft aRaft in allRafts)
+        {
+            mActiveRafts[(int)aRaft.mRaftIndex] = aRaft;
+        }
+
+        Cinemachine.CinemachineTargetGroup target = GameObject.FindObjectOfType<Cinemachine.CinemachineTargetGroup>();
+
+        mRaftTargetGroup = target.gameObject.transform;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            ExitGames.Client.Photon.Hashtable customProperties = PhotonNetwork.CurrentRoom.CustomProperties;
+            customProperties.Add("MasterPlayer", 0);
+            customProperties.Add("ClientPlayer", -1);
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+            {
+                customProperties["ClientPlayer"] = 2;
+            }
+            Score aScore = new Score();
+            aScore.mScore = 0.0f;
+            aScore.mScoreMultiplier = 1.0f;
+            customProperties.Add("scoreStruct", GenHelpers.SerializeData(aScore));
+            PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
+        }
+
+    }
+
 
 }

@@ -3,35 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
-using UnityEngine.UIElements;
 
-public class PlayerController : MonoBehaviourPun, IPunObservable
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] float mReverseNegateMultiplier = 0.35f;
     Vector2 mMoveVector;
     [HideInInspector] public Raft mCurrentRaft;
-
-    private void Start()
-    {
-        if (photonView.IsMine)
-        {
-            var actionEventArray = GameObject.FindObjectOfType<PlayerInput>().actionEvents;
-
-            foreach (var actionEvent in actionEventArray)
-            {
-                if (actionEvent.actionName.Contains("MoveRaft"))
-                {
-                    actionEvent.AddListener(OnMoveStick);
-                }
-                else if (actionEvent.actionName.Contains("ChangeRaft"))
-                {
-                    actionEvent.AddListener(OnChangeRaft);
-                }
-            }
-            mCurrentRaft = DataHandler.Instance.mActiveRafts[(PhotonNetwork.IsMasterClient ? 0 : 2)];
-            mCurrentRaft.mSelected = true;
-        }
-    }
 
     void FixedUpdate()
     {
@@ -59,41 +36,18 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         {
             if(pCallbackContext.ReadValueAsButton())
             {
-                if(!photonView.IsMine)
-                {
-                    return;
-                }
-                int aIx = (int)mCurrentRaft.mRaftIndex;
-                aIx = (aIx + 1) % DataHandler.Instance.mActiveRafts.Length;
-                while (aIx != (int) mCurrentRaft.mRaftIndex)
-                {
-                    if(DataHandler.Instance.mActiveRafts[aIx].mSelected)
+                NetworkManager.Instance.RaiseEvent(
+                    NetworkManager.EVNT_CHANGERAFT,
+                    new object[] { PhotonNetwork.IsMasterClient },
+                    new Photon.Realtime.RaiseEventOptions()
                     {
-                        aIx = (aIx + 1) % DataHandler.Instance.mActiveRafts.Length;
-                    }
-                    else
+                        Receivers = Photon.Realtime.ReceiverGroup.MasterClient
+                    },
+                    new ExitGames.Client.Photon.SendOptions()
                     {
-                        Raft aRaft = DataHandler.Instance.mActiveRafts[aIx];
-                        mCurrentRaft.mSelected = false;
-                        aRaft.mSelected = true;
-                        ExitGames.Client.Photon.Hashtable customProperties = PhotonNetwork.CurrentRoom.CustomProperties;
-                        bool[] selectedRafts = (bool[])customProperties["selectedRafts"];
-                        customProperties = new ExitGames.Client.Photon.Hashtable();
-                        selectedRafts[(int)mCurrentRaft.mRaftIndex] = false;
-                        selectedRafts[(int)aRaft.mRaftIndex] = true;
-                        //customProperties["selectedRafts"] = selectedRafts;
-                        customProperties.Add("selectedRafts",selectedRafts);
-                        PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
-                        mCurrentRaft = aRaft;
-                    }
-                }
-
+                        Reliability = true
+                    });
             }
         }
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        
     }
 }
