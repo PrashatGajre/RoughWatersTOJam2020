@@ -5053,9 +5053,9 @@ MonoBehaviour:
   mMenuClassifier: {fileID: 11400000, guid: 8741890afa7b29442adb5dc41aef5758, type: 2}
   mStartMenuState: 2
   mResetPosition: 1
-  mDelay: 0
-  mFadeInTime: 0
-  mFadeOutTime: 0
+  mDelay: 0.2
+  mFadeInTime: 0.2
+  mFadeOutTime: 0.1
   mVisibleCallbackTime: 0.7
   mGameOverTitleText: {fileID: 967100636}
   mScoreText: {fileID: 3165619}
@@ -6119,9 +6119,9 @@ MonoBehaviour:
   mMenuClassifier: {fileID: 11400000, guid: 2f143ba69c9640948afcebc5eaea560e, type: 2}
   mStartMenuState: 2
   mResetPosition: 1
-  mDelay: 0
-  mFadeInTime: 0
-  mFadeOutTime: 0
+  mDelay: 0.2
+  mFadeInTime: 0.2
+  mFadeOutTime: 0.1
   mVisibleCallbackTime: 0.7
   mStartButton: {fileID: 477541570}
 --- !u!225 &776107767
@@ -9558,9 +9558,9 @@ MonoBehaviour:
   mMenuClassifier: {fileID: 11400000, guid: be90231f80264d34e9922678d439088c, type: 2}
   mStartMenuState: 2
   mResetPosition: 1
-  mDelay: 0
-  mFadeInTime: 0
-  mFadeOutTime: 0
+  mDelay: 0.2
+  mFadeInTime: 0.2
+  mFadeOutTime: 0.1
   mVisibleCallbackTime: 0.7
   mStartSinglePlayerButton: {fileID: 635267212}
 --- !u!225 &1263862246
@@ -10182,9 +10182,9 @@ MonoBehaviour:
   mMenuClassifier: {fileID: 11400000, guid: 77703f461d87a534cb57fb6629385bf5, type: 2}
   mStartMenuState: 2
   mResetPosition: 1
-  mDelay: 0
-  mFadeInTime: 0
-  mFadeOutTime: 0
+  mDelay: 0.2
+  mFadeInTime: 0.2
+  mFadeOutTime: 0.1
   mVisibleCallbackTime: 0.7
   mScoreText: {fileID: 1173077309}
   mScoreMultiplierText: {fileID: 1539017204}
@@ -17023,9 +17023,9 @@ MonoBehaviour:
   mMenuClassifier: {fileID: 11400000, guid: 4b507e6e1a6e1764fa9d6ca58e582a96, type: 2}
   mStartMenuState: 2
   mResetPosition: 1
-  mDelay: 0
-  mFadeInTime: 0
-  mFadeOutTime: 0
+  mDelay: 0.2
+  mFadeInTime: 0.2
+  mFadeOutTime: 0.1
   mVisibleCallbackTime: 0.7
   mLoadingMessageText: {fileID: 244286229}
   mLoadingMessages:

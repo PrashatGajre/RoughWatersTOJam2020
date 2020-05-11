@@ -4420,9 +4420,9 @@ MonoBehaviour:
   mMenuClassifier: {fileID: 11400000, guid: 79c3a15d559f11943b5acf5212e98f8a, type: 2}
   mStartMenuState: 1
   mResetPosition: 1
-  mDelay: 0
-  mFadeInTime: 0
-  mFadeOutTime: 0
+  mDelay: 0.2
+  mFadeInTime: 0.2
+  mFadeOutTime: 0.1
   mVisibleCallbackTime: 0.7
 --- !u!224 &2505325517855937632
 RectTransform:
