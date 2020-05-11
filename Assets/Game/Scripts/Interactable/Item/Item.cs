@@ -54,25 +54,14 @@ public class Item : MonoBehaviourPun
                 case Type.Multiplier:
                     {
                         DataHandler.Instance.mScore.mScoreMultiplier *= mModifierAmount;
-                        PhotonNetwork.CurrentRoom.SetCustomProperties(
-                        new ExitGames.Client.Photon.Hashtable()
-                        {
-                            { "scoreStruct", GenHelpers.SerializeData(DataHandler.Instance.mScore)}
-                        });
                         break;
                     }
                 case Type.Score:
                     {
                         DataHandler.Instance.mScore.mScore += DataHandler.Instance.mScore.mScoreMultiplier * mModifierAmount;
-                        PhotonNetwork.CurrentRoom.SetCustomProperties(
-                        new ExitGames.Client.Photon.Hashtable()
-                        {
-                            { "scoreStruct", GenHelpers.SerializeData(DataHandler.Instance.mScore)}
-                        });
                         break;
                     }
             }
-            //PhotonNetwork.Destroy(photonView);
             photonView.RPC("Kill", RpcTarget.All, 1);
         }
     }
