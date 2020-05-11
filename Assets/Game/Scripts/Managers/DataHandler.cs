@@ -25,19 +25,14 @@ public class DataHandler : Singleton<DataHandler>
         NetworkManager.Instance.mNetworkCallbacks.OnRoomPropertiesUpdateDelegate -= Propertiesupdated;
     }
 
-    void Start()
-    {
-        for(int aI = 0; aI < mActiveRafts.Length;aI ++)
-        {
-            mActiveRafts[aI].mRaftIndex = (Raft.RaftType)aI;
-        }
-        mStartPosition = mRaftTargetGroup.position;
-    }
-
     void Update()
     {
         if (!mGameStarted)
         {
+            if(mRaftTargetGroup != null)
+            {
+                mStartPosition = mRaftTargetGroup.position;
+            }
             return;
         }
         if(!PhotonNetwork.IsMasterClient)
