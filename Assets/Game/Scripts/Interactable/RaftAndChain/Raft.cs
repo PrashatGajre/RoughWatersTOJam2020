@@ -11,7 +11,7 @@ public class Raft : MonoBehaviourPun, IPunObservable
         Yellow
     }
 
-    /*[HideInInspector]*/ public bool mSelected = false;
+    [HideInInspector] public bool mSelected = false;
     [HideInInspector] public RaftType mRaftIndex;
     public float mSpeed = 50.0f;
     public float mFatigueDecreaseRate = 10.0f;

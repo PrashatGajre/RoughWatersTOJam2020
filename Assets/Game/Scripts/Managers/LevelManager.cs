@@ -61,7 +61,14 @@ public class LevelManager : Singleton<LevelManager>
         if(PhotonNetwork.IsMasterClient)
         {
             ExitGames.Client.Photon.Hashtable customProperties = PhotonNetwork.CurrentRoom.CustomProperties;
-            customProperties.Add("selectedRafts", new bool[] { true, false, true });
+            if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
+            {
+                customProperties.Add("selectedRafts", new bool[] { true, false, true });
+            }
+            else
+            {
+                customProperties.Add("selectedRafts", new bool[] { true, false, false });
+            }
             Score aScore = new Score();
             aScore.mScore = 0.0f;
             aScore.mScoreMultiplier = 1.0f;
