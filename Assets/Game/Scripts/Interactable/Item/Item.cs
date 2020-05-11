@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviourPun
 {
     public enum Type
     {
@@ -20,6 +20,10 @@ public class Item : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+        if (!photonView.IsMine)
         {
             return;
         }
@@ -68,9 +72,14 @@ public class Item : MonoBehaviour
                         break;
                     }
             }
-            PhotonNetwork.Destroy(gameObject);
+            //PhotonNetwork.Destroy(photonView);
+            photonView.RPC("Kill", RpcTarget.All, 1);
         }
     }
 
-
+    [PunRPC]
+    void Kill(int pPlaceHolder, PhotonMessageInfo pInfo)
+    {
+        Destroy(gameObject);
+    }
 }

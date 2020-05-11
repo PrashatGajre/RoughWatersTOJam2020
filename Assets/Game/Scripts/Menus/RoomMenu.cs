@@ -53,7 +53,6 @@ public class RoomMenu : Menu
     public void StartGameplay()
     {
         //Debug.Log("Loading Game Scene..");
-        MenuManager.Instance.ShowMenu(NetworkManager.Instance.mSceneLoadingMenu);
         mStartSinglePlayerButton.interactable = false;
 
         Photon.Pun.PhotonNetwork.CurrentRoom.IsOpen = false;
@@ -97,6 +96,7 @@ public class RoomMenu : Menu
             string sceneToLoad = (string)data[0];
 
             Debug.Log("LOADING : " + sceneToLoad);
+            MenuManager.Instance.ShowMenu(NetworkManager.Instance.mSceneLoadingMenu);
             MultiSceneManager.Instance.LoadScene(sceneToLoad);
         }
 
