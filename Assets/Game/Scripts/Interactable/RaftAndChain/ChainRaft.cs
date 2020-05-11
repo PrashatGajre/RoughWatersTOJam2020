@@ -58,10 +58,12 @@ public class ChainRaft : Raft
             if(mAddChainJoint)
             {
                 photonView.RPC("AddChainRPC", PhotonNetwork.MasterClient, 1);
+                mAddChainJoint = false;
             }
-            if(mRemoveChainJoint)
+            if (mRemoveChainJoint)
             {
                 photonView.RPC("RemoveChainRPC", PhotonNetwork.MasterClient, 1);
+                mRemoveChainJoint = false;
             }
         }
     }
@@ -102,7 +104,6 @@ public class ChainRaft : Raft
 
     void AddNewChainConnection()
     {
-        mAddChainJoint = false;
         if(mCurrentChainLength == mMaximumChainLength)
         {
             return;
@@ -114,7 +115,6 @@ public class ChainRaft : Raft
     }
     void RemoveChainConnection()
     {
-        mRemoveChainJoint = false;
         if(mCurrentChainLength == mMinimumChainLength)
         {
             return;
