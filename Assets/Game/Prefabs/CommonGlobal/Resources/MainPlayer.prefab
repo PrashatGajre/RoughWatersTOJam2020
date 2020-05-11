@@ -44,8 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: effc7d2dddef32b4f8e4c60bc398a192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mChangeRaftThreshold: 0.95
-  mDelayBetweenShifting: 0.5
   mReverseNegateMultiplier: 0.35
   mCurrentRaft: {fileID: 0}
 --- !u!114 &6013760079295512002
