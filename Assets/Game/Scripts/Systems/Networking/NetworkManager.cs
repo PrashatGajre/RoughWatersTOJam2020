@@ -109,7 +109,7 @@ public class NetworkManager : Singleton<NetworkManager>
 
     public void JoinRandomRoomFailed(short returnCode, string message)
     {
-        Debug.Log("Join random room failed: " + message + "\nCreating new room...");
+        //Debug.Log("Join random room failed: " + message + "\nCreating new room...");
         MenuManager.Instance.ShowLoad();
         CreateRoom();
     }
@@ -123,7 +123,7 @@ public class NetworkManager : Singleton<NetworkManager>
 
     public void CreateRoomSuccess()
     {
-        Debug.Log("Room joined taking to the room menu");
+        //Debug.Log("Room joined taking to the room menu");
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             if (player.NickName == mPlayerNickName)
@@ -137,7 +137,7 @@ public class NetworkManager : Singleton<NetworkManager>
 
     public void CreateRoomFailed(short returnCode, string message)
     {
-        Debug.Log("Failed to create room: " + message);
+        //Debug.Log("Failed to create room: " + message);
     }
 
     public void LeaveRoom()

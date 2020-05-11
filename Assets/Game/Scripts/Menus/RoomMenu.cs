@@ -95,7 +95,7 @@ public class RoomMenu : Menu
             object[] data = (object[])photonEvent.CustomData;
             string sceneToLoad = (string)data[0];
 
-            Debug.Log("LOADING : " + sceneToLoad);
+            //Debug.Log("LOADING : " + sceneToLoad);
             MenuManager.Instance.ShowMenu(NetworkManager.Instance.mSceneLoadingMenu);
             MultiSceneManager.Instance.LoadScene(sceneToLoad);
         }
