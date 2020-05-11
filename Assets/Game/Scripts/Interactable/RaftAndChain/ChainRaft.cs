@@ -37,6 +37,15 @@ public class ChainRaft : Raft
                 AddNewChainConnection();
             }
         }
+        var actionEventArray = GameObject.FindObjectOfType<PlayerInput>().actionEvents;
+        foreach (var actionEvent in actionEventArray)
+        {
+            if (actionEvent.actionName.Contains("ChangeChainLength"))
+            {
+                actionEvent.AddListener(OnChainLengthChange);
+            }
+        }
+
     }
 
     protected override void Update()
@@ -175,10 +184,6 @@ public class ChainRaft : Raft
 
     public void OnChainLengthChange(InputAction.CallbackContext pCallbackContext)
     {
-        if(!PhotonNetwork.IsMasterClient)
-        {
-            return;
-        }
         if (DataHandler.Instance.mGameStarted)
         {
             float aChainLengthDelta = (float)pCallbackContext.ReadValueAsObject();
