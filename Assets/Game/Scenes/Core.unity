@@ -287,28 +287,28 @@ MonoBehaviour:
     mEffectUpDelay: 0.1
     mEffectDownTime: 0.1
     mEffectDownDelay: 0.1
-    mEffectColor: {r: 0.09675462, g: 0.6320754, b: 0.07453719, a: 1}
+    mEffectColor: {r: 0, g: 1, b: 0, a: 0.69803923}
     mCurrentCounter: 0
   - mEffectRepeatCount: 1
     mEffectUpTime: 0.1
     mEffectUpDelay: 0.1
     mEffectDownTime: 0.1
     mEffectDownDelay: 0.1
-    mEffectColor: {r: 0.050980397, g: 0.58431375, b: 0.8941177, a: 1}
+    mEffectColor: {r: 0.050980397, g: 0.58431375, b: 0.8941177, a: 0.69803923}
     mCurrentCounter: 0
   - mEffectRepeatCount: 1
     mEffectUpTime: 0.1
     mEffectUpDelay: 0.1
     mEffectDownTime: 0.1
     mEffectDownDelay: 0.1
-    mEffectColor: {r: 0.62352943, g: 0.627451, b: 0.5882353, a: 1}
+    mEffectColor: {r: 1, g: 1, b: 0, a: 0.69803923}
     mCurrentCounter: 0
   - mEffectRepeatCount: 3
     mEffectUpTime: 0.1
     mEffectUpDelay: 0.1
     mEffectDownTime: 0.1
     mEffectDownDelay: 0.1
-    mEffectColor: {r: 0.96470594, g: 0.8196079, b: 0, a: 1}
+    mEffectColor: {r: 0, g: 0, b: 1, a: 0.69803923}
     mCurrentCounter: 0
   mDamageEffect:
     mEffectRepeatCount: 3
@@ -316,7 +316,7 @@ MonoBehaviour:
     mEffectUpDelay: 0.1
     mEffectDownTime: 0.1
     mEffectDownDelay: 0.1
-    mEffectColor: {r: 0.7686275, g: 0.050980397, b: 0.050980397, a: 1}
+    mEffectColor: {r: 1, g: 0, b: 0, a: 1}
     mCurrentCounter: 0
   mDamageShakeTime: 0.5
   mAmplitudeGain: 2
@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mMixer: {fileID: 24100000, guid: 314945c4a26992347a294692437235b9, type: 2}
-  AudioSrcSizes: 030000000a0000000300000003000000
+  AudioSrcSizes: 010000000a0000000100000001000000
   mAudioMixerData:
   - mMixerGroup: {fileID: -1562115231859559814, guid: 314945c4a26992347a294692437235b9,
       type: 2}
@@ -383,7 +383,15 @@ MonoBehaviour:
       type: 2}
     mName: UI
     mExposedVolVariableName: UIVol
-  mAudioData: []
+  mAudioData:
+  - mAudioClip: {fileID: 8300000, guid: 2d784a4b93e90cb49bffc94f7d404fec, type: 3}
+    mAudioGroup: Music
+  - mAudioClip: {fileID: 8300000, guid: a366146410922db4bab70f9261f6dc44, type: 3}
+    mAudioGroup: Sfx
+  - mAudioClip: {fileID: 8300000, guid: 32eb7a66570a669408d6c0c94af418d2, type: 3}
+    mAudioGroup: Sfx
+  - mAudioClip: {fileID: 8300000, guid: 26ce683d6e0dfa34d800ad91df77ad2e, type: 3}
+    mAudioGroup: Sfx
 --- !u!1 &324254571
 GameObject:
   m_ObjectHideFlags: 0

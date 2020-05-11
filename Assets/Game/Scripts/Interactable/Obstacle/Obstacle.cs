@@ -50,6 +50,10 @@ public class Obstacle : MonoBehaviour
 
     protected void ObstacleBehaviour(Raft pRaft)
     {
+        if(!DataHandler.Instance.mGameStarted)
+        {
+            return;
+        }
         mCollidedTime = mRedamageAfterTime;
         switch (mObstacleType)
         {

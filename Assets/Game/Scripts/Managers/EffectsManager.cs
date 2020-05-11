@@ -134,6 +134,14 @@ public class EffectsManager : Singleton<EffectsManager>
                     Reliability = true
                 });
         }
+        if(pType == Item.Type.Score)
+        {
+            AudioManager.Instance.PlaySFX("Coin");
+        }
+        else
+        {
+            AudioManager.Instance.PlaySFX("Collect");
+        }
         mItemEffects[aIx].mCurrentCounter = 0;
         VignetteEffectCaller(mItemEffects[aIx]);
     }
@@ -159,6 +167,7 @@ public class EffectsManager : Singleton<EffectsManager>
         //            Reliability = true
         //        });
         //}
+        AudioManager.Instance.PlaySFX("Crash");
         mDamageEffect.mCurrentCounter = 0;
         VignetteEffectCaller(mDamageEffect);
         if(mCameraShakeNoise == null)
