@@ -101,7 +101,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void OnSceneReadyEvent(object[] aContent)
     {
-        //Debug.Log("RAISING EVENT EVNT_GAMESCENEREADY");
+        Debug.Log("RAISING EVENT EVNT_GAMESCENEREADY");
         NetworkManager.Instance.RaiseEvent(NetworkManager.EVNT_GAMESCENEREADY, aContent, 
             new Photon.Realtime.RaiseEventOptions { Receivers = Photon.Realtime.ReceiverGroup.All }, 
             new ExitGames.Client.Photon.SendOptions { Reliability = true });

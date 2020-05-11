@@ -57,6 +57,10 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         {
             if(pCallbackContext.ReadValueAsButton())
             {
+                if(!photonView.IsMine)
+                {
+                    return;
+                }
                 int aIx = (int)mCurrentRaft.mRaftIndex;
                 aIx = (aIx + 1) % DataHandler.Instance.mActiveRafts.Length;
                 while (aIx != (int) mCurrentRaft.mRaftIndex)
